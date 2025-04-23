@@ -5,7 +5,7 @@ CREATE TABLE `USERS`
     `PASSWORD`   VARCHAR(20)  NOT NULL           COMMENT '비밀번호',
     `ROLE`       VARCHAR(10)                     COMMENT '사용자/관리자',
     `CREATED_AT` timestamp    NULL DEFAULT now() COMMENT '생성일자',
-    `DELETED_AT` timestamp    NULL DEFAULT now() COMMENT '탈퇴일자',
+    `DELETED_AT` timestamp    NULL DEFAULT now() COMMENT '탈퇴일자'
 );
 
 
@@ -17,7 +17,7 @@ CREATE TABLE `ITEMS`
     `ITEM_NAME`  VARCHAR(50)  NOT NULL      COMMENT '아이템이름',
     `ITEM_PRICE` int          NOT NULL      COMMENT '아이템가격',
     `STOCK`      int          DEFAULT 100   COMMENT '재고',
-    `IMG`        VARCHAR(255)               COMMENT '아이템사진',
+    `IMG`        VARCHAR(255)               COMMENT '아이템사진'
 );
 
 
@@ -43,5 +43,5 @@ CREATE TABLE `ORDERITEMS`
     `ITEM_ID`         int               COMMENT '주문아이템',
     `ITEM_NAME`       varchar(100)      COMMENT '주문아이템이름',
     `ITEM_PRICE`      int               COMMENT '주문아이템가격',
-    `ITEM_COUNT`      int               COMMENT '주문아이템갯수',
+    `ITEM_COUNT`      int               COMMENT '주문아이템갯수'
 );
