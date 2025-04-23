@@ -4,8 +4,8 @@ CREATE TABLE `USERS`
     `EMAIL`      VARCHAR(30)  PRIMARY KEY        COMMENT '이메일',
     `PASSWORD`   VARCHAR(20)  NOT NULL           COMMENT '비밀번호',
     `ROLE`       VARCHAR(10)                     COMMENT '사용자/관리자',
-    `CREATED_AT` timestamp    NULL DEFAULT now() COMMENT '생성일자',
-    `DELETED_AT` timestamp    DEFAULT NULL       COMMENT '탈퇴일자'
+    `CREATED_AT` timestamp    DEFAULT now()      COMMENT '생성일자',
+    `DELETED_AT` timestamp                       COMMENT '탈퇴일자'
 );
 
 
@@ -30,7 +30,7 @@ CREATE TABLE `ORDERS`
     `POSTCODE`     int          NOT NULL           COMMENT '우편번호',
     `ORDER_LIST`   VARCHAR(255)                    COMMENT '주문리스트',
     `TOTAL_PRICE`  int                             COMMENT '총가격',
-    `CREATED_AT`   timestamp    NULL DEFAULT now() COMMENT '생성일자',
+    `CREATED_AT`   timestamp    DEFAULT now()      COMMENT '생성일자',
     `ORDER_STATUS` VARCHAR(10)                     COMMENT '주문상태'
 
 );
