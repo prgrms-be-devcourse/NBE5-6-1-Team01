@@ -174,3 +174,9 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,intellij
+
+# 빌드 아웃풋 무시
+/target/
+
+# application.properties
+src/main/resources/application.properties
