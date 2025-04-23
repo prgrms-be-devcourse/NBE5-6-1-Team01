@@ -1,11 +1,11 @@
 DROP TABLE IF EXISTS `USERS`;
 CREATE TABLE `USERS`
 (
-    `EMAIL`      int          PRIMARY KEY        COMMENT '이메일',
+    `EMAIL`      VARCHAR(30)  PRIMARY KEY        COMMENT '이메일',
     `PASSWORD`   VARCHAR(20)  NOT NULL           COMMENT '비밀번호',
     `ROLE`       VARCHAR(10)                     COMMENT '사용자/관리자',
     `CREATED_AT` timestamp    NULL DEFAULT now() COMMENT '생성일자',
-    `DELETED_AT` timestamp    NULL DEFAULT now() COMMENT '탈퇴일자'
+    `DELETED_AT` timestamp    DEFAULT NULL       COMMENT '탈퇴일자'
 );
 
 
