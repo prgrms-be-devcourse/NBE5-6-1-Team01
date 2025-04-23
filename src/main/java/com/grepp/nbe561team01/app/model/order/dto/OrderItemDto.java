@@ -13,6 +13,6 @@ public class OrderItemDto {
         private Integer itemId;
         private String itemName;
         private Integer itemPrice;
-        private Integer count;
+        private Integer itemCount;
 
 }
