@@ -7,6 +7,9 @@
 </head>
 <body>
 <%@include file="/WEB-INF/view/include/header.jsp" %>
+<div class="row justify-content-center m-4">
+  <h1 class="text-center">로그인</h1>
+</div>
 <main class="container">
   <div class="card security">
     <form:form modelAttribute="signinRequest" action="/user/signin" method="post" id="signinRequest">
