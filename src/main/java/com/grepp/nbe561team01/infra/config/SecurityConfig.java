@@ -1,14 +1,16 @@
 package com.grepp.nbe561team01.infra.config;
 
+import static org.springframework.http.HttpMethod.DELETE;
+import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.PUT;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -20,6 +22,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -29,11 +32,11 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         return http.getSharedObject(AuthenticationManagerBuilder.class)
-                   .build();
+            .build();
     }
 
     @Bean
-    public AuthenticationSuccessHandler successHandler(){
+    public AuthenticationSuccessHandler successHandler() {
         return new AuthenticationSuccessHandler() {
             @Override
             public void onAuthenticationSuccess(HttpServletRequest request,
@@ -41,11 +44,11 @@ public class SecurityConfig {
                 throws IOException, ServletException {
 
                 boolean isAdmin = authentication.getAuthorities()
-                                      .stream()
-                                      .anyMatch(authority ->
-                                                    authority.getAuthority().equals("ROLE_ADMIN"));
+                    .stream()
+                    .anyMatch(authority ->
+                        authority.getAuthority().equals("ROLE_ADMIN"));
 
-                if(isAdmin){
+                if (isAdmin) {
                     response.sendRedirect("/admin");
                     return;
                 }
@@ -58,12 +61,17 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        // csrf 설정 (delete 요청 시에 필요)
+        http.csrf(csrf -> csrf.disable());
 
         http
             .authorizeHttpRequests(
                 (requests) -> requests
-                                  .requestMatchers(GET, "/**").permitAll()
-                                  .anyRequest().authenticated()
+                    .requestMatchers(GET, "/**").permitAll()  // GET
+                    .requestMatchers(POST, "/**").permitAll()  // POST
+                    .requestMatchers(PUT, "/**").permitAll()  // PUT
+                    .requestMatchers(DELETE, "/**").permitAll()  // DELETE
+                    .anyRequest().authenticated()
             )
             .logout(LogoutConfigurer::permitAll);
 
@@ -72,7 +80,7 @@ public class SecurityConfig {
 
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
