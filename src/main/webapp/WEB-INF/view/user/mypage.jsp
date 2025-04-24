@@ -19,6 +19,11 @@
         <!-- TODO: 주문내역 목록 불러오기 (DB 데이터 조회 확인을 임시로 비번으로 해둠) -->
         <h3>주문내역</h3>
         <p>${user.password}</p>
+        <div class="text-end mt-3 mb-3">
+            <form action="/user/update" method="get">
+                <button type="submit" class="btn btn-outline-dark">비밀번호 수정</button>
+            </form>
+        </div>
     </div>
 </div>
 </body>

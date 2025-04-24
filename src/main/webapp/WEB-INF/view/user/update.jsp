@@ -8,26 +8,26 @@
 <body>
 <%@include file="/WEB-INF/view/include/header.jsp" %>
 <div class="row justify-content-center m-4">
-  <h1 class="text-center">로그인</h1>
+  <h1 class="text-center">비밀번호 변경</h1>
 </div>
 <main class="container">
   <div class="card security">
-    <form:form modelAttribute="signinRequest" action="/user/signin" method="post" id="signinRequest">
-      <div class="mb-4">
-        <label for="email" class="form-label">이메일</label>
-        <form:input path="email" type="email" class="form-control mb-1"
-                    id="email" placeholder="Email"/>
-        <form:errors path="email" cssClass="helper-text"/>
-      </div>
+    <form:form modelAttribute="updateForm" action="/user/update" method="post" id="updateForm">
       <div class="mb-4">
         <label for="password" class="form-label">비밀번호</label>
         <form:password path="password" class="form-control"
-                       id="password" placeholder="Password"/>
+                    id="password" placeholder="password"/>
         <form:errors path="password" cssClass="helper-text"/>
+      </div>
+      <div class="mb-4">
+        <label for="newPassword" class="form-label">새 비밀번호</label>
+        <form:password path="newPassword" class="form-control"
+                       id="newPassword" placeholder="newPassword"/>
+        <form:errors path="newPassword" cssClass="helper-text"/>
       </div>
 
       <div class="button-container">
-        <button type="submit" name="action" class="btn btn-dark w-50">로그인</button>
+        <button type="submit" name="action" class="btn btn-dark w-50">비밀번호 변경</button>
       </div>
     </form:form>
   </div>

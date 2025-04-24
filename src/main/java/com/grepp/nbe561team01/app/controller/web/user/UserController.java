@@ -2,6 +2,8 @@ package com.grepp.nbe561team01.app.controller.web.user;
 
 import com.grepp.nbe561team01.app.controller.web.user.form.SigninRequest;
 import com.grepp.nbe561team01.app.controller.web.user.form.SignupRequest;
+import com.grepp.nbe561team01.app.controller.web.user.form.UpdateForm;
+import com.grepp.nbe561team01.app.model.auth.dto.Principal;
 import com.grepp.nbe561team01.app.model.user.UserService;
 import com.grepp.nbe561team01.app.model.user.code.Role;
 import com.grepp.nbe561team01.app.model.user.dto.UserDto;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
@@ -71,6 +75,38 @@ public class UserController {
         return "user/signin";
     }
 
+
+    @GetMapping("update")
+    public String update(UpdateForm form){
+        return "user/update";
+    }
+
+    @PostMapping("update")
+    public String update(
+        @Valid
+        UpdateForm form,
+        BindingResult bindingResult,
+        Authentication authentication,
+        RedirectAttributes redirectAttributes
+    ){
+        //UpdateForm에 맞지 않으면 반환
+        if(bindingResult.hasErrors()){
+            return "user/update";
+        }
+        Principal principal = (Principal) authentication.getPrincipal();
+        // update진행
+        // TODO
+        // 3. 예외의 2종류 나눠서 출력하기
+        // 5. jsp의 header 바꾸기
+        try{
+            userService.update(principal.getEmail(), form.getPassword(), form.getNewPassword());
+        }catch (RuntimeException e){
+            return "user/update";
+        }
+
+        // update 성공 시 mypage로 redirect
+        return "redirect:/user/mypage";
+    }
 
 }
 

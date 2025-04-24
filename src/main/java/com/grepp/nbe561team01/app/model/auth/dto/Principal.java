@@ -19,4 +19,7 @@ public class Principal extends User {
         List<SimpleGrantedAuthority> authorities){
         return new Principal(user.getEmail(), user.getPassword(), authorities);
     }
+    public String getEmail() {
+        return getUsername();
+    }
 }

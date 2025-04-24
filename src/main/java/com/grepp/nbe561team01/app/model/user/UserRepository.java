@@ -9,6 +9,11 @@ import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface UserRepository {
+    @Select("select password from USERS where email = #{email}")
+    String selectPasswordByeMail(String email);
+
+    @Update("update USERS set password=#{password} where email = #{email}")
+    void update(String email, String password);
 
     @Select("select count(*) from users where email = #{email} and deleted_at is null")
     Boolean existsUser(String email);
