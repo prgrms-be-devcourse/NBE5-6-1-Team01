@@ -1,0 +1,25 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+<%--    <title>Hello, World!</title>--%>
+<%--    <!-- Required meta tags -->--%>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%@include file="/WEB-INF/view/include/static.jsp" %>
+</head>
+<body class="container-fluid">
+<%@include file="/WEB-INF/view/include/header.jsp"%>
+<div class="row justify-content-center m-4">
+    <h1 class="text-center">MyPage</h1>
+</div>
+<div class="card">
+    <div class="row">
+        <h2>${user.email}</h2>
+        <!-- TODO: 주문내역 목록 불러오기 (DB 데이터 조회 확인을 임시로 비번으로 해둠) -->
+        <h3>주문내역</h3>
+        <p>${user.password}</p>
+    </div>
+</div>
+</body>
+</html>

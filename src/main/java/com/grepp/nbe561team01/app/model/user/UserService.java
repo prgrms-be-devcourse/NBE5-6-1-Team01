@@ -4,6 +4,8 @@ import com.grepp.nbe561team01.app.model.user.code.Role;
 import com.grepp.nbe561team01.app.model.user.dto.UserDto;
 import com.grepp.nbe561team01.infra.error.exceptions.CommonException;
 import com.grepp.nbe561team01.infra.response.ResponseCode;
+import com.grepp.nbe561team01.app.model.user.dto.UserDto;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -43,6 +45,10 @@ public class UserService {
 
         userRepository.removeUser(email);
         return true;
+    }
+
+    public Optional<UserDto> findByEmail(String email) {
+        return Optional.ofNullable(userRepository.findByEmail(email));
     }
 }
 
