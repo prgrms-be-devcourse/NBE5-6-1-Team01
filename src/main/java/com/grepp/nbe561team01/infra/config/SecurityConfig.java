@@ -62,7 +62,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         // csrf 설정 (delete 요청 시에 필요)
-        http.csrf(csrf -> csrf.disable());
+        //http.csrf(csrf -> csrf.disable());
 
         http
             .authorizeHttpRequests(
@@ -71,7 +71,15 @@ public class SecurityConfig {
                     .requestMatchers(POST, "/**").permitAll()  // POST
                     .requestMatchers(PUT, "/**").permitAll()  // PUT
                     .requestMatchers(DELETE, "/**").permitAll()  // DELETE
-                    .anyRequest().authenticated()
+                    .anyRequest().permitAll()
+            )
+            .formLogin((form) -> form
+                .loginPage("/user/signin")
+                .usernameParameter("email")
+                .loginProcessingUrl("/user/signin")
+                .defaultSuccessUrl("/")
+                .successHandler(successHandler())
+                .permitAll()
             )
             .logout(LogoutConfigurer::permitAll);
 

@@ -1,13 +1,13 @@
 package com.grepp.nbe561team01.app.controller.web.user;
 
+import com.grepp.nbe561team01.app.controller.web.user.form.SigninRequest;
 import com.grepp.nbe561team01.app.controller.web.user.form.SignupRequest;
 import com.grepp.nbe561team01.app.model.user.UserService;
 import com.grepp.nbe561team01.app.model.user.code.Role;
+import com.grepp.nbe561team01.app.model.user.dto.UserDto;
 import com.grepp.nbe561team01.infra.error.exceptions.CommonException;
 import com.grepp.nbe561team01.infra.response.ResponseCode;
 import jakarta.validation.Valid;
-import com.grepp.nbe561team01.app.model.user.dto.UserDto;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -17,10 +17,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.ui.Model;
 
 @Controller
 @RequiredArgsConstructor
@@ -45,7 +43,7 @@ public class UserController {
 
       userService.signup(form.toDto(), Role.USER);
 
-      return "redirect:/user/login";
+      return "redirect:/user/signin";
     }
 
 
@@ -67,4 +65,13 @@ public class UserController {
         model.addAttribute("user", user);
         return "user/mypage";
     }
+
+    @GetMapping("signin")
+    public String signin(SigninRequest form){
+        return "user/signin";
+    }
+
+
 }
+
+
