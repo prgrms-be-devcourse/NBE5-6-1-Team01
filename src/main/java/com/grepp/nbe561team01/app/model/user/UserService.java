@@ -37,6 +37,21 @@ public class UserService {
         userRepository.insert(dto);
     }
 
+    @Transactional
+    public void update(String email, String password, String newPassword){
+        // email의 password와 입력한 password가 다른 경우의 예외
+        if (!passwordEncoder.matches(password, userRepository.selectPasswordByeMail(email))){
+            throw new RuntimeException();
+        }
+        // email의 비밀번호를 newPassword로 최신화, 비밀번호가 바뀌지 않는다면(기존과 같다면) 예외
+        if(newPassword.equals(password)){
+            throw new RuntimeException();
+        }
+        // 예외가 없으면 update
+        String encodedPassword = passwordEncoder.encode(newPassword);
+        userRepository.update(email,encodedPassword);
+    }
+
 
     @Transactional
     public boolean removeUser(String email) {
