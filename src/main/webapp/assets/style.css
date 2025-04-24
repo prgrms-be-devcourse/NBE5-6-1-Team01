@@ -55,3 +55,33 @@ hr {
 .products .action {
   line-height: 38px;
 }
+
+.container{
+  align-content: center;
+}
+
+.header {
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+  padding: 3vw 6vw;
+}
+
+.header a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+
+.security{
+  padding: 5vw;
+  align-content: center;
+}
+
+.button-container {
+  text-align: center;
+}
+
+#signupForm{
+  margin: 0px;
+}

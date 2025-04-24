@@ -8,13 +8,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-    <!-- sample.html의 <style> 태그 옮김 -->
-    <link rel="stylesheet" href="../assets/style.css">
+    <%@include file="/WEB-INF/view/include/static.jsp" %>
 </head>
 <body class="container-fluid">
+<%@include file="/WEB-INF/view/include/header.jsp"%>
 <div class="row justify-content-center m-4">
     <h1 class="text-center">Grids & Circle</h1>
 </div>
