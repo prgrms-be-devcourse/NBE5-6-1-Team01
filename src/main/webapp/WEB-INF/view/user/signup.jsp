@@ -12,11 +12,16 @@
     <form:form modelAttribute="signupForm" action="/user/signup" method="post" id="signupForm">
       <div class="mb-4">
         <label for="email" class="form-label">이메일</label>
-        <input type="email" class="form-control mb-1" id="email">
+        <form:input path="email" type="email" class="form-control mb-1"
+                    id="email" placeholder="Email"/>
+        <form:errors path="email" cssClass="helper-text"/>
+        <span class="helper-text" id="emailCheckMsg" style="display: none"></span>
       </div>
       <div class="mb-4">
         <label for="password" class="form-label">비밀번호</label>
-        <input type="text" class="form-control" id="password">
+        <form:password path="password" class="form-control"
+                       id="password" placeholder="Password"/>
+        <form:errors path="password" cssClass="helper-text"/>
       </div>
 
       <div class="button-container">
@@ -25,6 +30,34 @@
     </form:form>
   </div>
 </main>
+<script>
+  const validElement = document.querySelector('#emailCheckMsg');
+  document.querySelector('#email').addEventListener('focusout', async ev => {
+    const id = ev.target.value;
+    if(!id) return;
+    const response = await fetch('/api/user/exists/' + id);
+    const data = await response.json();
+    validElement.style.display = 'block';
+    validElement.textContent = data.data ? '사용이 불가능한 아이디 입니다.' : '사용 가능한 아이디 입니다.';
+  });
 
+  document.querySelector('#signupForm').addEventListener('submit', async ev => {
+    // form tag 의 기본 이벤트 차단
+    ev.preventDefault();
+
+    const id = document.querySelector('#email').value;
+    if(!id) return;
+    const response = await fetch('/api/user/exists/' + id);
+    const data = await response.json();
+
+    if(data.data){
+      document.querySelector('#email').focus();
+      validElement.textContent = '사용이 불가능한 아이디 입니다.';
+      return;
+    }
+
+    ev.target.submit();
+  });
+</script>
 </body>
 </html>
