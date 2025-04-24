@@ -5,6 +5,7 @@ import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.http.HttpMethod.PUT;
 
+import com.grepp.nbe561team01.app.model.auth.AuthService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -32,7 +33,6 @@ public class SecurityConfig {
 
     @Value("${remember-me.key}")
     private String rememberMeKey;
-
 
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
@@ -67,14 +67,16 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         // csrf 설정 (delete 요청 등에서 필요에 따라 활성화)
-        // http.csrf(csrf -> csrf.disable());
+         http.csrf(csrf -> csrf.disable());
 
         http
             .authorizeHttpRequests((requests) -> requests
-//                .requestMatchers(GET, "/user/signin", "/user/signup").permitAll()
-//                .requestMatchers(POST, "/user/signin", "/user/signup").permitAll()
-                    .requestMatchers(GET, "/**").permitAll()
-                    .requestMatchers(POST, "/**").permitAll()
+
+                .requestMatchers(GET, "/user/signin", "/user/signup").permitAll()
+                .requestMatchers(POST, "/user/signin", "/user/signup").permitAll()
+//                .requestMatchers(GET, "/**").permitAll()
+//                .requestMatchers(POST, "/**").permitAll()
+                .requestMatchers(GET, "/api/**").permitAll()
                 .requestMatchers(GET, "/user/logout", "/user/mypage").hasAnyRole("ADMIN", "USER")
                 .requestMatchers(GET, "/").hasAnyRole("ADMIN", "USER")
                 .requestMatchers(PUT, "/**").permitAll()  // PUT
