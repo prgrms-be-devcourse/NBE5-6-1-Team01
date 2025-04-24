@@ -1,7 +1,7 @@
-package com.grepp.nbe561team01.app.model.uesr.dto;
+package com.grepp.nbe561team01.app.model.user.dto;
 
 
-import com.grepp.nbe561team01.app.model.uesr.code.Role;
+import com.grepp.nbe561team01.app.model.user.code.Role;
 import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.NoArgsConstructor;
