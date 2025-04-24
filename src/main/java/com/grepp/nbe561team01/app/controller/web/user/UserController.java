@@ -1,6 +1,6 @@
 package com.grepp.nbe561team01.app.controller.web.user;
 
-import com.grepp.nbe561team01.app.controller.api.user.form.SignupForm;
+import com.grepp.nbe561team01.app.controller.web.user.form.SignupRequest;
 import com.grepp.nbe561team01.app.model.user.UserService;
 import com.grepp.nbe561team01.app.model.user.code.Role;
 import jakarta.validation.Valid;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,13 +24,13 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("signup")
-    public String signup(SignupForm form){
+    public String signup(SignupRequest form){
       return "user/signup";
     }
 
     @PostMapping("signup")
     public String signup(
-        @Valid SignupForm form,
+        @Valid SignupRequest form,
         BindingResult bindingResult,
         Model model
     ){

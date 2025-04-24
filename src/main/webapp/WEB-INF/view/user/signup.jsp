@@ -9,7 +9,7 @@
 <%@include file="/WEB-INF/view/include/header.jsp" %>
 <main class="container">
   <div class="card security">
-    <form:form modelAttribute="signupForm" action="/user/signup" method="post" id="signupForm">
+    <form:form modelAttribute="signupRequest" action="/user/signup" method="post" id="signupRequest">
       <div class="mb-4">
         <label for="email" class="form-label">이메일</label>
         <form:input path="email" type="email" class="form-control mb-1"
@@ -41,7 +41,7 @@
     validElement.textContent = data.data ? '사용이 불가능한 아이디 입니다.' : '사용 가능한 아이디 입니다.';
   });
 
-  document.querySelector('#signupForm').addEventListener('submit', async ev => {
+  document.querySelector('#signupRequest').addEventListener('submit', async ev => {
     // form tag 의 기본 이벤트 차단
     ev.preventDefault();
 
