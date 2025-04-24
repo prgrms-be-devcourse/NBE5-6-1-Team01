@@ -4,9 +4,13 @@ import com.grepp.nbe561team01.app.controller.web.user.form.SigninRequest;
 import com.grepp.nbe561team01.app.controller.web.user.form.SignupRequest;
 import com.grepp.nbe561team01.app.model.user.UserService;
 import com.grepp.nbe561team01.app.model.user.code.Role;
+import com.grepp.nbe561team01.app.model.user.dto.UserDto;
+import com.grepp.nbe561team01.infra.error.exceptions.CommonException;
+import com.grepp.nbe561team01.infra.response.ResponseCode;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -39,7 +43,7 @@ public class UserController {
 
       userService.signup(form.toDto(), Role.USER);
 
-      return "redirect:/user/login";
+      return "redirect:/user/signin";
     }
 
 
@@ -50,6 +54,18 @@ public class UserController {
         return "redirect:/";
     }
 
+    @GetMapping("mypage")
+    public String mypage(Authentication authentication, Model model){
+        log.info("authentication : {}", authentication);
+
+        String email = authentication.getName();
+        UserDto user = userService.findByEmail(email)
+            .orElseThrow(() -> new CommonException(ResponseCode.UNAUTHORIZED));
+
+        model.addAttribute("user", user);
+        return "user/mypage";
+    }
+
     @GetMapping("signin")
     public String signin(SigninRequest form){
         return "user/signin";
@@ -57,3 +73,5 @@ public class UserController {
 
 
 }
+
+
