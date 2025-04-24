@@ -63,6 +63,7 @@ public class DBConfig {
         return new DataSourceTransactionManager(dataSource());
     }
 
+    // DB 초기화 코드
     @Bean
     public ResourceDatabasePopulator databasePopulator() {
         ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
