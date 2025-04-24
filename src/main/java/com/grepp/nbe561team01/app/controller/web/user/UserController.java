@@ -45,7 +45,7 @@ public class UserController {
     ){
       if(bindingResult.hasErrors()){ return "user/signup"; }
 
-      userService.signup(form.toDto(), Role.USER);
+      userService.signup(form.toDto(), Role.ROLE_USER);
 
       return "redirect:/user/signin";
     }
