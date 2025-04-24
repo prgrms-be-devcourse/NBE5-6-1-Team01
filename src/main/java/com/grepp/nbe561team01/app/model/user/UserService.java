@@ -1,7 +1,12 @@
 package com.grepp.nbe561team01.app.model.user;
 
+import com.grepp.nbe561team01.app.model.user.code.Role;
+import com.grepp.nbe561team01.app.model.user.dto.UserDto;
+import com.grepp.nbe561team01.infra.error.exceptions.CommonException;
+import com.grepp.nbe561team01.infra.response.ResponseCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,7 +15,26 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserService {
 
+    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+
+    public Boolean isDuplicatedId(String id) {
+        return userRepository.existsUser(id);
+    }
+
+    @Transactional
+    public void signup(UserDto dto, Role role){
+    if(userRepository.existsUser(dto.getEmail())){
+        log.info("signup test: {}", ResponseCode.BAD_REQUEST);
+    }
+
+        String encodedPassword = passwordEncoder.encode(dto.getPassword());
+        dto.setPassword(encodedPassword);
+
+        dto.setRole(role);
+        userRepository.insert(dto);
+    }
+
 
     @Transactional
     public boolean removeUser(String email) {
