@@ -1,11 +1,12 @@
 DROP TABLE IF EXISTS `USERS`;
-CREATE TABLE `USERS`
+CREATE TABLE USERS
 (
-    `EMAIL`      VARCHAR(30)  PRIMARY KEY        COMMENT '이메일',
-    `PASSWORD`   VARCHAR(20)  NOT NULL           COMMENT '비밀번호',
-    `ROLE`       VARCHAR(10)                     COMMENT '사용자/관리자',
-    `CREATED_AT` timestamp    DEFAULT now()      COMMENT '생성일자',
-    `DELETED_AT` timestamp                       COMMENT '탈퇴일자'
+    USER_ID    INT          AUTO_INCREMENT PRIMARY KEY NOT NULL COMMENT '사용자 ID',
+    EMAIL      VARCHAR(30)                       NOT NULL COMMENT '이메일',
+    PASSWORD   VARCHAR(255)                       NOT NULL COMMENT '비밀번호',
+    ROLE       VARCHAR(10)                       NULL COMMENT '사용자/관리자',
+    CREATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP NULL COMMENT '생성일자',
+    DELETED_AT TIMESTAMP                          NULL COMMENT '탈퇴일자'
 );
 
 
@@ -38,7 +39,7 @@ CREATE TABLE `ORDERS`
 DROP TABLE IF EXISTS `ORDERITEMS`;
 CREATE TABLE `ORDERITEMS`
 (
-    `ORDERITEM_ID`    int PRIMARY KEY   COMMENT '주문아이템ID',
+    `ORDERITEM_ID`    int PRIMARY KEY   COMMENT '주문아이템 ID',
     `ORDER_ID`        int               COMMENT '주문번호',
     `ITEM_ID`         int               COMMENT '주문아이템',
     `ITEM_NAME`       varchar(100)      COMMENT '주문아이템이름',
