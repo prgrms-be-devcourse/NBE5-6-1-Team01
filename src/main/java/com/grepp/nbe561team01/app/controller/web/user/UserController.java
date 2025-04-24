@@ -1,6 +1,6 @@
 package com.grepp.nbe561team01.app.controller.web.user;
 
-import com.grepp.nbe561team01.app.controller.api.user.form.SignupForm;
+import com.grepp.nbe561team01.app.controller.web.user.form.SignupRequest;
 import com.grepp.nbe561team01.app.model.user.UserService;
 import com.grepp.nbe561team01.app.model.user.code.Role;
 import com.grepp.nbe561team01.infra.error.exceptions.CommonException;
@@ -31,13 +31,13 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("signup")
-    public String signup(SignupForm form){
+    public String signup(SignupRequest form){
       return "user/signup";
     }
 
     @PostMapping("signup")
     public String signup(
-        @Valid SignupForm form,
+        @Valid SignupRequest form,
         BindingResult bindingResult,
         Model model
     ){
