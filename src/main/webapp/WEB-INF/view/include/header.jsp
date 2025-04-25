@@ -7,9 +7,6 @@
         </div>
     </sec:authorize>
     <sec:authorize access="isAuthenticated()">
-        <div class="header">
-            <a href="/user/mypage">MyPage</a>
             <a href="/user/signin">Logout</a>
-        </div>
     </sec:authorize>
 </header>
