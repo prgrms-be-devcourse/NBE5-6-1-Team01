@@ -93,3 +93,21 @@ hr {
   margin-bottom: 15px;
   justify-content: center;
 }
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 3vw 6vw;
+}
+
+.header-left,
+.header-right {
+  display: flex;
+  gap: 20px;
+}
+
+.admin-header a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
