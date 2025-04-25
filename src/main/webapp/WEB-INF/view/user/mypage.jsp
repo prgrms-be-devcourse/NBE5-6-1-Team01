@@ -29,6 +29,16 @@
             </form>
         </div>
     </div>
+                    <div class="row-button">
+                        <h5><c:out value="${order.createdAt}"/></h5>
+
+                        <div class="text-end mt-3 mb-3">
+                            <form action="/user/mypage" method="post">
+                                <input type="hidden" name="orderid" value="${order.orderId}">
+                                <button type="submit" class="btn btn-outline-dark">취소</button>
+                            </form>
+                        </div>
+                    </div>
 </div>
 </body>
 </html>
