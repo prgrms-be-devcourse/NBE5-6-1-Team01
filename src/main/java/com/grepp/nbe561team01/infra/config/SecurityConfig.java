@@ -72,13 +72,10 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests((requests) -> requests
 
-                .requestMatchers(GET, "/user/signin", "/user/signup").permitAll()
-                .requestMatchers(POST, "/user/signin", "/user/signup").permitAll()
-//                .requestMatchers(GET, "/**").permitAll()
-//                .requestMatchers(POST, "/**").permitAll()
+                .requestMatchers(GET, "/user/signin", "/user/signup").anonymous()
+                .requestMatchers(POST, "/user/signin", "/user/signup").anonymous()
                 .requestMatchers(GET, "/api/**").permitAll()
-                .requestMatchers(GET, "/user/logout", "/user/mypage").hasAnyRole("ADMIN", "USER")
-                .requestMatchers(GET, "/").hasAnyRole("ADMIN", "USER")
+                .requestMatchers(GET, "/", "/user/logout", "/user/mypage").hasAnyRole("ADMIN", "USER")
                 .requestMatchers(PUT, "/**").permitAll()  // PUT
                 .requestMatchers(DELETE, "/**").permitAll()  // DELETE
                 .requestMatchers("/assets/**").permitAll() // 정적 리소스 허용
@@ -87,6 +84,7 @@ public class SecurityConfig {
             .formLogin((form) -> form
                 .loginPage("/user/signin")
                 .usernameParameter("email")
+                .failureUrl("/user/signin?error=true")
                 .loginProcessingUrl("/user/signin")
                 .defaultSuccessUrl("/")
                 .successHandler(successHandler())
