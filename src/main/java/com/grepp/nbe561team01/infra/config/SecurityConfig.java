@@ -5,10 +5,12 @@ import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.http.HttpMethod.PUT;
 
+import com.grepp.nbe561team01.app.model.auth.AuthService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,6 +30,9 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
+
+    @Value("${remember-me.key}")
+    private String rememberMeKey;
 
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
@@ -61,26 +66,31 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        // csrf 설정 (delete 요청 시에 필요)
-        //http.csrf(csrf -> csrf.disable());
+        // csrf 설정 (delete 요청 등에서 필요에 따라 활성화)
+         http.csrf(csrf -> csrf.disable());
 
         http
-            .authorizeHttpRequests(
-                (requests) -> requests
-                    .requestMatchers(GET, "/**").permitAll()  // GET
-                    .requestMatchers(POST, "/**").permitAll()  // POST
-                    .requestMatchers(PUT, "/**").permitAll()  // PUT
-                    .requestMatchers(DELETE, "/**").permitAll()  // DELETE
-                    .anyRequest().permitAll()
+            .authorizeHttpRequests((requests) -> requests
+
+                .requestMatchers(GET, "/user/signin", "/user/signup").anonymous()
+                .requestMatchers(POST, "/user/signin", "/user/signup").anonymous()
+                .requestMatchers(GET, "/api/**").permitAll()
+                .requestMatchers(GET, "/", "/user/logout", "/user/mypage").hasAnyRole("ADMIN", "USER")
+                .requestMatchers(PUT, "/**").permitAll()  // PUT
+                .requestMatchers(DELETE, "/**").permitAll()  // DELETE
+                .requestMatchers("/assets/**").permitAll() // 정적 리소스 허용
+                .anyRequest().authenticated()
             )
             .formLogin((form) -> form
                 .loginPage("/user/signin")
                 .usernameParameter("email")
+                .failureUrl("/user/signin?error=true")
                 .loginProcessingUrl("/user/signin")
                 .defaultSuccessUrl("/")
                 .successHandler(successHandler())
                 .permitAll()
             )
+            .rememberMe(rememberMe -> rememberMe.key(rememberMeKey))
             .logout(LogoutConfigurer::permitAll);
 
         return http.build();

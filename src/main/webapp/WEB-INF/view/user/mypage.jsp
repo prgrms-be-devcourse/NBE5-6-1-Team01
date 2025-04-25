@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@include file="/WEB-INF/view/include/page.jsp" %>
 <html>
 <head>
 <%--    <title>Hello, World!</title>--%>
