@@ -9,10 +9,10 @@ import org.apache.ibatis.annotations.Update;
 @Mapper
 public interface OrderRepository {
 
-    @Select("select * from orders where email = #{email} and deleted_at is null")
+    @Select("select * from orders where email = #{email}")
     List<OrderDto> selectAllByEmail(String email);
 
     // SoftDelete 적용
-    @Update("update orders set deleted_at = now() where order_id = #{orderId}")
+    @Update("update orders set deleted_at = now(), order_status = 'CANCEL' where order_id = #{orderId}")
     boolean removeOrder(Integer orderId);
 }
