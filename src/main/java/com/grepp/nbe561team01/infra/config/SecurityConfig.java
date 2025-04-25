@@ -74,6 +74,8 @@ public class SecurityConfig {
 
                 .requestMatchers(GET, "/user/signin", "/user/signup").anonymous()
                 .requestMatchers(POST, "/user/signin", "/user/signup").anonymous()
+                .requestMatchers(GET, "admin/signup").permitAll()
+                .requestMatchers(POST, "admin/signup").permitAll()
                 .requestMatchers(GET, "/api/**").permitAll()
                 .requestMatchers(GET, "/", "/user/logout", "/user/mypage").hasAnyRole("ADMIN", "USER")
                 .requestMatchers(PUT, "/**").permitAll()  // PUT
