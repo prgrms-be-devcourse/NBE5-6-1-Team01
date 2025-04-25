@@ -6,7 +6,9 @@
   <%@include file="/WEB-INF/view/include/static.jsp" %>
 </head>
 <body>
-<%@include file="/WEB-INF/view/include/header.jsp" %>
+<div class="header">
+  <%@include file="/WEB-INF/view/include/header.jsp" %>
+</div>
 <div class="row justify-content-center m-4">
   <h1 class="text-center">비밀번호 변경</h1>
 </div>

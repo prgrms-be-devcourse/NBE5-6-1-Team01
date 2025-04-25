@@ -1,4 +1,5 @@
 <%@ page language="java" %>
+
 <header>
     <sec:authorize access="isAnonymous()">
         <div class="header">
@@ -7,6 +8,6 @@
         </div>
     </sec:authorize>
     <sec:authorize access="isAuthenticated()">
-            <a href="/user/signin">Logout</a>
+            <a href="/user/logout">Logout</a>
     </sec:authorize>
 </header>
