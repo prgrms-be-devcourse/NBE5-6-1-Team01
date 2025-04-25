@@ -37,7 +37,7 @@
         </div>
         <div class="col-md-4 summary p-4">
             <div>
-                <h5 class="m-0 p-0"><b>Summary</b></h5>
+                <h5 class="m-0 p-0"><b>Item Register</b></h5>
             </div>
             <hr>
             <!-- Order 리스트 -->
@@ -53,24 +53,22 @@
             <!-- TODO: 결제버튼 클릭 시 action 추가, Form 클래스 추가 필요 -->
             <form:form action="${xxxx}/xxxx" method="post" enctype="" modelAttribute="">
                 <div class="mb-3">
-                    <label for="email" class="form-label">이메일</label>
-                    <input type="email" class="form-control mb-1" id="email">
+                    <label for="email" class="form-label">상품 이름</label>
+                    <input type="text" class="form-control mb-1" id="email">
                 </div>
                 <div class="mb-3">
-                    <label for="address" class="form-label">주소</label>
+                    <label for="address" class="form-label">상품 가격</label>
                     <input type="text" class="form-control mb-1" id="address">
                 </div>
                 <div class="mb-3">
-                    <label for="postcode" class="form-label">우편번호</label>
+                    <label for="postcode" class="form-label">재고</label>
                     <input type="text" class="form-control" id="postcode">
                 </div>
-                <div>당일 오후 2시 이후의 주문은 다음날 배송을 시작합니다.</div>
+
                 <div class="row pt-2 pb-2 border-top">
-                    <h5 class="col">총금액</h5>
                     <!-- TODO: totalPrice 가져오는 기능 필요 -->
-                    <h5 class="col text-end"><c:out value="${order.totalPrice}"/></h5>
                 </div>
-                <button type="submit" name="action" class="btn btn-dark col-12">결제하기</button>
+                <button type="submit" name="action" class="btn btn-dark col-12">등록하기</button>
             </form:form>
         </div>
     </div>
