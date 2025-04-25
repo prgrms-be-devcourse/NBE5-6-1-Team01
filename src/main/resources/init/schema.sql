@@ -29,11 +29,10 @@ CREATE TABLE `ORDERS`
     `EMAIL`        VARCHAR(30)  NOT NULL           COMMENT '이메일',
     `ADDRESS`      VARCHAR(50)  NOT NULL           COMMENT '주소',
     `POSTCODE`     int          NOT NULL           COMMENT '우편번호',
-    `ORDER_LIST`   VARCHAR(255)                    COMMENT '주문리스트',
     `TOTAL_PRICE`  int                             COMMENT '총가격',
     `CREATED_AT`   timestamp    DEFAULT now()      COMMENT '생성일자',
-    `ORDER_STATUS` VARCHAR(10)                     COMMENT '주문상태'
-
+    `ORDER_STATUS` VARCHAR(10)                     COMMENT '주문상태',
+    `DELETED_AT`   TIMESTAMP    NULL               COMMENT '탈퇴일자'
 );
 
 DROP TABLE IF EXISTS `ORDERITEMS`;
