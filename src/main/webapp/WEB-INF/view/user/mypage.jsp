@@ -39,12 +39,14 @@
                     <div class="row-button">
                         <h5><c:out value="${order.createdAt}"/></h5>
 
-                        <div class="text-end mt-3 mb-3">
-                            <form action="/user/mypage" method="post">
-                                <input type="hidden" name="orderid" value="${order.orderId}">
-                                <button type="submit" class="btn btn-outline-dark">취소</button>
-                            </form>
-                        </div>
+                        <c:if test="${order.orderStatus eq 'ORDER'}">
+                            <div class="text-end mt-3 mb-3">
+                                <form action="/user/mypage" method="post" onsubmit="return confirm('정말로 주문을 취소하시겠습니까?');">
+                                    <input type="hidden" name="orderid" value="${order.orderId}">
+                                    <button type="submit" class="btn btn-outline-dark">취소</button>
+                                </form>
+                            </div>
+                        </c:if>
                     </div>
                     <h6>주소: <c:out value="${order.address}"/></h6>
 
