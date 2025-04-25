@@ -7,7 +7,7 @@
         </div>
         <div class="header-right">
             <a href="/admin/mypage">MyPage</a>
-            <a href="/admin/product">Add Product</a>
+            <a href="/admin/itemManagement">Product Management</a>
         </div>
     </div>
 </header>

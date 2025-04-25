@@ -59,4 +59,9 @@ public class AdminController {
         return "admin/mypage";
     }
 
+    @GetMapping("itemManagement")
+    public String itemManagement(SignupRequest form){
+        return "admin/itemManagement";
+    }
+
 }
