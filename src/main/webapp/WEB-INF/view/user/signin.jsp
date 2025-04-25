@@ -13,14 +13,14 @@
 <main class="container">
 
   <div class="card security">
-    <c:if test="${not empty param.error}">
-      <div id="alert-wrong-login">아이디나 비밀번호를 확인하세요</div>
-    </c:if>
     <form:form modelAttribute="signinRequest" action="/user/signin" method="post" id="signinRequest">
       <div class="mb-4">
         <label for="email" class="form-label">이메일</label>
         <form:input path="email" type="email" class="form-control mb-1"
                     id="email" placeholder="Email"/>
+        <c:if test="${not empty param.error}">
+          <div id="alert-wrong-login">아이디나 비밀번호를 확인하세요</div>
+        </c:if>
         <form:errors path="email" cssClass="helper-text"/>
       </div>
       <div class="mb-4">
