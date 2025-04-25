@@ -10,7 +10,10 @@
     <%@include file="/WEB-INF/view/include/static.jsp" %>
 </head>
 <body class="container-fluid">
-<%@include file="/WEB-INF/view/include/header.jsp"%>
+<div class="header">
+    <a href="/">Home</a>
+    <%@include file="/WEB-INF/view/include/header.jsp"%>
+</div>
 <div class="row justify-content-center m-4">
     <h1 class="text-center">MyPage</h1>
 </div>
