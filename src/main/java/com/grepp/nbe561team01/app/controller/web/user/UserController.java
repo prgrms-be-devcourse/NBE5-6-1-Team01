@@ -8,6 +8,8 @@ import com.grepp.nbe561team01.app.model.user.UserService;
 import com.grepp.nbe561team01.app.model.user.code.Role;
 import com.grepp.nbe561team01.app.model.user.dto.UserDto;
 import com.grepp.nbe561team01.infra.error.exceptions.CommonException;
+import com.grepp.nbe561team01.infra.error.exceptions.PasswordDuplicatedException;
+import com.grepp.nbe561team01.infra.error.exceptions.PasswordNotMatchedException;
 import com.grepp.nbe561team01.infra.response.ResponseCode;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -87,20 +89,17 @@ public class UserController {
         UpdateForm form,
         BindingResult bindingResult,
         Authentication authentication,
-        RedirectAttributes redirectAttributes
+        Model model
     ){
         //UpdateForm에 맞지 않으면 반환
         if(bindingResult.hasErrors()){
             return "user/update";
         }
         Principal principal = (Principal) authentication.getPrincipal();
-        // update진행
-        // TODO
-        // 3. 예외의 2종류 나눠서 출력하기
-        // 5. jsp의 header 바꾸기
         try{
             userService.update(principal.getEmail(), form.getPassword(), form.getNewPassword());
-        }catch (RuntimeException e){
+        }catch (PasswordNotMatchedException | PasswordDuplicatedException e){
+            model.addAttribute("errorMessage", e.getMessage());
             return "user/update";
         }
 
