@@ -85,3 +85,11 @@ hr {
 #signupForm{
   margin: 0px;
 }
+
+#alert-wrong-login{
+  display: flex;
+  color: crimson;
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  justify-content: center;
+}
