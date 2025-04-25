@@ -13,6 +13,9 @@
   <h1 class="text-center">비밀번호 변경</h1>
 </div>
 <main class="container">
+  <c:if test="${not empty errorMessage}">
+    <div class="alert alert-danger">${errorMessage}</div>
+  </c:if>
   <div class="card security">
     <form:form modelAttribute="updateForm" action="/user/update" method="post" id="updateForm">
       <div class="mb-4">

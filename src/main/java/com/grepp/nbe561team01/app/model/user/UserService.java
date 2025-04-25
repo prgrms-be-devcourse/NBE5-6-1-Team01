@@ -3,6 +3,8 @@ package com.grepp.nbe561team01.app.model.user;
 import com.grepp.nbe561team01.app.model.user.code.Role;
 import com.grepp.nbe561team01.app.model.user.dto.UserDto;
 import com.grepp.nbe561team01.infra.error.exceptions.CommonException;
+import com.grepp.nbe561team01.infra.error.exceptions.PasswordDuplicatedException;
+import com.grepp.nbe561team01.infra.error.exceptions.PasswordNotMatchedException;
 import com.grepp.nbe561team01.infra.response.ResponseCode;
 import com.grepp.nbe561team01.app.model.user.dto.UserDto;
 import java.util.Optional;
@@ -41,11 +43,11 @@ public class UserService {
     public void update(String email, String password, String newPassword){
         // email의 password와 입력한 password가 다른 경우의 예외
         if (!passwordEncoder.matches(password, userRepository.selectPasswordByeMail(email))){
-            throw new RuntimeException();
+            throw new PasswordNotMatchedException("기존 비밀번호가 일치하지 않습니다.");
         }
         // email의 비밀번호를 newPassword로 최신화, 비밀번호가 바뀌지 않는다면(기존과 같다면) 예외
         if(newPassword.equals(password)){
-            throw new RuntimeException();
+            throw new PasswordDuplicatedException("기존과 동일한 비밀번호입니다.");
         }
         // 예외가 없으면 update
         String encodedPassword = passwordEncoder.encode(newPassword);
