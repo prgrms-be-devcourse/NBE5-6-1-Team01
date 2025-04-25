@@ -91,7 +91,15 @@ public class SecurityConfig {
                 .permitAll()
             )
             .rememberMe(rememberMe -> rememberMe.key(rememberMeKey))
-            .logout(LogoutConfigurer::permitAll);
+            .logout(logout -> logout
+                .logoutUrl("/user/logout")
+                .logoutSuccessUrl("/user/signin")
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .deleteCookies("JSESSIONID")
+                .permitAll()
+            );
+
 
         return http.build();
     }
