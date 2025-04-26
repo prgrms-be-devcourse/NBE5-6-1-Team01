@@ -15,10 +15,10 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
-    public List<OrderInfoDto> getAllOrders() {
+    public List<OrderDto> getAllOrders() {
         return orderRepository.selectAllOrders();
     }
-    public List<String> getItemNamesByOrderId(String orderId) {
+    public List<String> getItemNamesByOrderId(Integer orderId) {
         return orderRepository.selectOrderItemNames(orderId);
     }
   

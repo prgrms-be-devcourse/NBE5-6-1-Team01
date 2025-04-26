@@ -3,6 +3,7 @@ package com.grepp.nbe561team01.app.controller.web.admin;
 import com.grepp.nbe561team01.app.controller.web.user.form.SignupRequest;
 import com.grepp.nbe561team01.app.model.order.OrderService;
 import com.grepp.nbe561team01.app.model.order.code.OrderStatus;
+import com.grepp.nbe561team01.app.model.order.dto.OrderDto;
 import com.grepp.nbe561team01.app.model.order.dto.admin.OrderInfoDto;
 import com.grepp.nbe561team01.app.model.user.UserService;
 import com.grepp.nbe561team01.app.model.user.code.Role;
@@ -10,7 +11,9 @@ import com.grepp.nbe561team01.app.model.user.dto.UserDto;
 import com.grepp.nbe561team01.infra.error.exceptions.CommonException;
 import com.grepp.nbe561team01.infra.response.ResponseCode;
 import jakarta.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -63,18 +66,30 @@ public class AdminController {
         UserDto admin = adminService.findByEmail(email)
             .orElseThrow(() -> new CommonException(ResponseCode.UNAUTHORIZED));
 
-        List<OrderInfoDto> orders = orderService.getAllOrders();
+        List<OrderDto> orders = orderService.getAllOrders();
 
-        Map<String, List<String>> orderItemNamesMap = new HashMap<>();
-        for (OrderInfoDto order : orders) {
+        // email-address-OrderInfo Map
+        Map<String, Map<String, OrderInfoDto>> emailAddressOrderMap = new LinkedHashMap<>();
+
+        for (OrderDto order : orders) {
+            // OrderInfoDto 생성
             List<String> itemNames = orderService.getItemNamesByOrderId(order.getOrderId());
-            orderItemNamesMap.put(order.getOrderId(), itemNames);
+            OrderInfoDto orderInfo = new OrderInfoDto(
+                order.getOrderId(),
+                order.getCreatedAt(),
+                order.getOrderStatus(),
+                order.getTotalPrice(),
+                itemNames
+            );
+
+            // 이메일을 키로 한 서브 맵 생성 (이메일별로 주문 정보 관리)
+            emailAddressOrderMap
+                .computeIfAbsent(order.getEmail(), k -> new LinkedHashMap<>())
+                .put(order.getAddress(), orderInfo);  // 이메일에 해당하는 맵에 orderId와 함께 저장
         }
 
-        model.addAttribute("orderItemNamesMap", orderItemNamesMap);
         model.addAttribute("admin", admin);
-        model.addAttribute("orders", orders);
-        model.addAttribute("itemMap", orderItemNamesMap);
+        model.addAttribute("orderMap", emailAddressOrderMap);
 
         return "admin/mypage";
     }

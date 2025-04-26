@@ -10,27 +10,11 @@ import org.apache.ibatis.annotations.Update;
 @Mapper
 public interface OrderRepository {
 
-    @Select(
-        """
-        select
-            o.ORDER_ID,
-            o.EMAIL,
-            oi.ITEM_NAME,
-            o.ADDRESS,
-            o.ORDER_STATUS,
-            o.CREATED_AT
-        from
-            ORDERS o
-        join
-            ORDERITEMS oi on o.ORDER_ID = oi.ORDER_ID
-        order by 
-            o.EMAIL, o.ORDER_ID
-        """
-    )
-    List<OrderInfoDto> selectAllOrders();
+    @Select("select * from orders")
+    List<OrderDto> selectAllOrders();
 
     @Select("select ITEM_NAME from ORDERITEMS where ORDER_ID=#{orderId}")
-    List<String> selectOrderItemNames(String orderId);
+    List<String> selectOrderItemNames(Integer orderId);
 
     @Select("select * from orders where email = #{email}")
     List<OrderDto> selectAllByEmail(String email);
