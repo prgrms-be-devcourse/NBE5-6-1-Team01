@@ -119,7 +119,7 @@
   }
 
   // 상품 삭제
-  async function deleteItem() {
+  async function deleteItem(itemId) {
     if (!confirm('정말 삭제하시겠습니까?')) return;
 
     try {
