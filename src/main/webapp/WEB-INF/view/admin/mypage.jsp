@@ -43,6 +43,10 @@
             <h3>현재 주문 내역이 없습니다</h3>
         </c:if>
     </div>
-</div>
+    <div class="row text-end mt-3 mb-3">
+        <form action="/admin/remove" method="get">
+            <button type="submit" class="btn btn-outline-dark">주문 삭제</button>
+        </form>
+    </div>
 </body>
 </html>
