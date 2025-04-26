@@ -28,4 +28,13 @@ public class ItemService {
     public boolean deleteItem(Long itemId) {
         return itemRepository.removeItem(itemId);
     }
+
+
+    public ItemDto findById(Long itemId) {
+        return itemRepository.findById(itemId);
+    }
+
+    public void updateItem(Long itemId, ItemDto item) {
+        itemRepository.updateItem(itemId, item);
+    }
 }
