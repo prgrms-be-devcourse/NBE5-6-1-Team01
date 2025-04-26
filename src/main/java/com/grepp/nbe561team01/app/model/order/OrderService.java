@@ -23,7 +23,7 @@ public class OrderService {
     public List<OrderInfoDto> getAllOrders() {
         return orderRepository.selectAllOrders();
     }
-    public List<String> getItemNamesByOrderId(String orderId) {
+    public List<String> getItemNamesByOrderId(Integer orderId) {
         return orderRepository.selectOrderItemNames(orderId);
     }
   

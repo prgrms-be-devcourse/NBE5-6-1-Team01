@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class OrderInfoDto {
-    private String orderId;
+    private Integer orderId;
     private String email;
     private String address;
     private LocalDateTime createdAt;

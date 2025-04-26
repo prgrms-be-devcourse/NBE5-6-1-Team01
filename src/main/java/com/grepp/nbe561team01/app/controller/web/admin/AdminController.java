@@ -2,7 +2,6 @@ package com.grepp.nbe561team01.app.controller.web.admin;
 
 import com.grepp.nbe561team01.app.controller.web.user.form.SignupRequest;
 import com.grepp.nbe561team01.app.model.order.OrderService;
-import com.grepp.nbe561team01.app.model.order.code.OrderStatus;
 import com.grepp.nbe561team01.app.model.order.dto.admin.OrderInfoDto;
 import com.grepp.nbe561team01.app.model.user.UserService;
 import com.grepp.nbe561team01.app.model.user.code.Role;
@@ -65,7 +64,7 @@ public class AdminController {
 
         List<OrderInfoDto> orders = orderService.getAllOrders();
 
-        Map<String, List<String>> orderItemNamesMap = new HashMap<>();
+        Map<Integer, List<String>> orderItemNamesMap = new HashMap<>();
         for (OrderInfoDto order : orders) {
             List<String> itemNames = orderService.getItemNamesByOrderId(order.getOrderId());
             orderItemNamesMap.put(order.getOrderId(), itemNames);

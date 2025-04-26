@@ -32,7 +32,7 @@ public interface OrderRepository {
     List<OrderInfoDto> selectAllOrders();
 
     @Select("select ITEM_NAME from ORDERITEMS where ORDER_ID=#{orderId}")
-    List<String> selectOrderItemNames(String orderId);
+    List<String> selectOrderItemNames(Integer orderId);
 
     @Select("select * from orders where email = #{email}")
     List<OrderDto> selectAllByEmail(String email);
