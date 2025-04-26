@@ -1,6 +1,7 @@
 package com.grepp.nbe561team01.app.model.order;
 
 import com.grepp.nbe561team01.app.model.order.dto.OrderDto;
+import com.grepp.nbe561team01.app.model.order.dto.admin.OrderInfoDto;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;

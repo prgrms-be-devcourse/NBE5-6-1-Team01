@@ -15,7 +15,6 @@ public class OrderDto {
         private String email;
         private String address;
         private Integer postcode;
-        private List<OrderItemDto> orderList;
         private Integer totalPrice;
         private LocalDateTime createdAt;
         private OrderStatus orderStatus;
