@@ -28,13 +28,33 @@
                 <c:if test="${order.orderId ne currentOrderId}">
                     <c:set var="currentOrderId" value="${order.orderId}" scope="page" />
                     <div class="ms-3 mb-2">
-                        <small>
-                                ${order.orderId} | ${order.createdAt}, ${order.address}, item:
+                        <div>${order.orderId} | ${order.createdAt} (${order.orderStatus})</div>
+                        <div>${order.address}</div>
+                        <div>
+                            item:
                             <c:forEach var="item" items="${itemMap[order.orderId]}" varStatus="itemStatus">
-                                ${item}<c:if test="${!itemStatus.last}">, </c:if>
-                            </c:forEach>
-                            (${order.orderStatus})
-                        </small>
+                            ${item}<c:if test="${!itemStatus.last}">, </c:if>
+                        </c:forEach>
+                        </div>
+
+                        <c:if test="${order.orderStatus eq 'ORDER'}">
+                            <div class="text-end mt-3 mb-3">
+                                <form action="/admin/mypage" method="post" onsubmit="return confirm('정말로 주문을 취소하시겠습니까?');">
+                                    <input type="hidden" name="orderid" value="${order.orderId}">
+                                    <button type="submit" class="btn btn-outline-dark">취소</button>
+                                </form>
+                            </div>
+                        </c:if>
+                        <c:if test="${order.orderStatus eq 'CANCEL'}">
+                            <div class="text-end mt-3 mb-3">
+                                <button type="button" class="btn btn-outline-dark" disabled>CANCEL</button>
+                            </div>
+                        </c:if>
+                        <c:if test="${order.orderStatus eq 'DELIVER'}">
+                            <div class="text-end mt-3 mb-3">
+                                <button type="button" class="btn btn-outline-dark" disabled>DELIVER</button>
+                            </div>
+                        </c:if>
                     </div>
                 </c:if>
             </c:forEach>
