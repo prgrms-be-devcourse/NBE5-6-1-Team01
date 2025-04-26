@@ -2,6 +2,7 @@ package com.grepp.nbe561team01.app.controller.web.admin;
 
 import com.grepp.nbe561team01.app.controller.web.user.form.SignupRequest;
 import com.grepp.nbe561team01.app.model.order.OrderService;
+import com.grepp.nbe561team01.app.model.order.code.OrderStatus;
 import com.grepp.nbe561team01.app.model.order.dto.admin.OrderInfoDto;
 import com.grepp.nbe561team01.app.model.user.UserService;
 import com.grepp.nbe561team01.app.model.user.code.Role;
@@ -21,6 +22,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
@@ -76,6 +78,13 @@ public class AdminController {
 
         return "admin/mypage";
     }
+
+    @PostMapping("mypage")
+    public String mypage(@RequestParam("orderid") int orderId, Model model){
+        adminService.cancelOrder(orderId, "CANCEL");
+        return "redirect:/admin/mypage";
+    }
+
 
     @GetMapping("itemManagement")
     public String itemManagement(SignupRequest form){

@@ -33,4 +33,7 @@ public interface UserRepository {
     @Select("select * from users where email = #{email} and deleted_at is null")
     Optional<UserDto> selectByEmail(String email);
 
+    @Update("update orders set ORDER_STATUS = #{status} where order_id = #{orderId}")
+    void cancelOrder(int orderId, String status);
+
 }

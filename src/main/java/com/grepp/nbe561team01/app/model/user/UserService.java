@@ -67,5 +67,12 @@ public class UserService {
     public Optional<UserDto> findByEmail(String email) {
         return Optional.ofNullable(userRepository.findByEmail(email));
     }
+
+    @Transactional
+    public boolean cancelOrder(int orderId, String status) {
+
+        userRepository.cancelOrder(orderId, status);
+        return false;
+    }
 }
 
