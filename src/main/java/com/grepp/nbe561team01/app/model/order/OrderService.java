@@ -1,5 +1,6 @@
 package com.grepp.nbe561team01.app.model.order;
 
+import com.grepp.nbe561team01.app.model.order.dto.admin.OrderInfoDto;
 import com.grepp.nbe561team01.app.model.order.dto.OrderDto;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,13 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
+    public List<OrderInfoDto> getAllOrders() {
+        return orderRepository.selectAllOrders();
+    }
+    public List<String> getItemNamesByOrderId(String orderId) {
+        return orderRepository.selectOrderItemNames(orderId);
+    }
+  
     @Transactional
     public List<OrderDto> findOrderByEmail(String email){
         List<OrderDto> orderList = orderRepository.selectAllByEmail(email);
@@ -24,5 +32,6 @@ public class OrderService {
     public boolean removeOrder(Integer orderId){
         return orderRepository.removeOrder(orderId);
     }
+
 
 }

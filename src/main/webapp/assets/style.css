@@ -111,6 +111,21 @@ hr {
   font-weight: bold;
 }
 
+.scrollable-content {
+ max-height: 400px;
+ overflow-y: auto;
+}
+
+.admin-card {
+  padding-top: 15px;
+  height: 518px;
+}
+
+.admin-order-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 .mypage{
   padding: 30px;
 }
