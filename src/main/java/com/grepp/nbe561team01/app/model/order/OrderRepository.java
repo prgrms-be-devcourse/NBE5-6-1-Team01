@@ -19,6 +19,9 @@ public interface OrderRepository {
     @Select("select * from orders where email = #{email}")
     List<OrderDto> selectAllByEmail(String email);
 
+    @Select("select * from orders where order_id = #{orderId}")
+    OrderDto selectAllByOrderId(Integer orderId);
+
     // SoftDelete 적용
     @Update("update orders set deleted_at = now(), order_status = 'CANCEL' where order_id = #{orderId}")
     boolean removeOrder(Integer orderId);

@@ -21,6 +21,10 @@ public class OrderService {
     public List<String> getItemNamesByOrderId(Integer orderId) {
         return orderRepository.selectOrderItemNames(orderId);
     }
+
+    public OrderDto getOrderById(Integer orderId) {
+        return orderRepository.selectAllByOrderId(orderId);
+    }
   
     @Transactional
     public List<OrderDto> findOrderByEmail(String email){

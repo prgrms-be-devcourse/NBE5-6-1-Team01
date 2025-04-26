@@ -30,7 +30,15 @@
                         <h6 style="margin-top: 7px">주소: ${orderEntry.key}(${orderEntry.value.postcode})</h6>
                         <li class="list-group-item mt-1">
                             <div class="row-button admin-order-info">
-                                <h5>${orderEntry.value.createdAt} (order-id: ${orderEntry.value.orderId})</h5>
+                                <h5>
+                                    <form action="/admin/addressDetail" method="post">
+                                        <input type="hidden" name="orderid" value="${orderEntry.value.orderId}">
+                                        <a type="submit" href="/admin/addressDetail?address=${orderEntry.key}"
+                                           onclick="window.open(this.href, '_blank', 'width=800,height=600,left=850,top=400'); return false;">
+                                            ${orderEntry.value.createdAt} (order-id: ${orderEntry.value.orderId})
+                                        </a>
+                                    </form>
+                                </h5>
                                 <c:if test="${orderEntry.value.orderStatus eq 'ORDER'}">
                                     <div class="text-end">
                                         <form action="/admin/mypage" method="post" onsubmit="return confirm('정말로 주문을 취소하시겠습니까?');">

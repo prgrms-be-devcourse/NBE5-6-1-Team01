@@ -107,4 +107,17 @@ public class AdminController {
         return "admin/item-management";
     }
 
+    @GetMapping("addressDetail")
+    public String addressDetail(){
+
+        return "admin/addressDetail";
+    }
+
+    @PostMapping("addressDetail")
+    public String addressDetail(Integer orderId, Model model){
+        OrderDto order = orderService.getOrderById(orderId);
+        model.addAttribute("order", order);
+        return "admin/addressDetail";
+    }
+
 }
