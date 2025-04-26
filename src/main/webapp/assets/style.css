@@ -110,3 +110,17 @@ hr {
   color: black;
   font-weight: bold;
 }
+
+.mypage{
+  padding: 30px;
+}
+
+.row-button{
+  display: flex;
+  justify-content: space-between; /* 양쪽 끝으로 배치 */
+  align-items: center;
+}
+
+.left .right{
+
+}

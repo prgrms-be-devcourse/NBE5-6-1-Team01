@@ -13,12 +13,12 @@ CREATE TABLE USERS
 DROP TABLE IF EXISTS `ITEMS`;
 CREATE TABLE `ITEMS`
 (
-    `ITEM_ID`    int          PRIMARY KEY   COMMENT '아이템번호',
-    `ITEM_TYPE`  VARCHAR(20)                COMMENT '아이템타입',
-    `ITEM_NAME`  VARCHAR(50)  NOT NULL      COMMENT '아이템이름',
-    `ITEM_PRICE` int          NOT NULL      COMMENT '아이템가격',
-    `STOCK`      int          DEFAULT 100   COMMENT '재고',
-    `IMG`        VARCHAR(255)               COMMENT '아이템사진'
+    `ITEM_ID`    int          AUTO_INCREMENT PRIMARY KEY   COMMENT '아이템번호',
+    `ITEM_TYPE`  VARCHAR(20)                               COMMENT '아이템타입',
+    `ITEM_NAME`  VARCHAR(50)  NOT NULL                     COMMENT '아이템이름',
+    `ITEM_PRICE` int          NOT NULL                     COMMENT '아이템가격',
+    `STOCK`      int          DEFAULT 100                  COMMENT '재고',
+    `IMG`        VARCHAR(255)                              COMMENT '아이템사진'
 );
 
 
@@ -29,11 +29,10 @@ CREATE TABLE `ORDERS`
     `EMAIL`        VARCHAR(30)  NOT NULL           COMMENT '이메일',
     `ADDRESS`      VARCHAR(50)  NOT NULL           COMMENT '주소',
     `POSTCODE`     int          NOT NULL           COMMENT '우편번호',
-    `ORDER_LIST`   VARCHAR(255)                    COMMENT '주문리스트',
     `TOTAL_PRICE`  int                             COMMENT '총가격',
     `CREATED_AT`   timestamp    DEFAULT now()      COMMENT '생성일자',
-    `ORDER_STATUS` VARCHAR(10)                     COMMENT '주문상태'
-
+    `ORDER_STATUS` VARCHAR(10)                     COMMENT '주문상태',
+    `DELETED_AT`   TIMESTAMP    NULL               COMMENT '탈퇴일자'
 );
 
 DROP TABLE IF EXISTS `ORDERITEMS`;
