@@ -21,6 +21,7 @@
     <div class="row">
         <div class="col-md-8 mt-4 d-flex flex-column align-items-start p-3 pt-0">
             <h5 class="flex-grow-0"><b>상품 목록</b></h5>
+
             <ul class="list-group products" id="item-list">
                 <!-- 아이템 리스트 동적으로 추가 -->
             </ul>

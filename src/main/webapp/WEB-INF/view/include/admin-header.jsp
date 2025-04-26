@@ -6,7 +6,7 @@
             <a href="/admin/itemManagement">Product Management</a>
         </div>
         <div class="header-right">
-            <a href="/admin/mypage">MyPage</a>
+            <a href="/admin/mypage">Admin Page</a>
             <a href="/user/logout">Logout</a>
         </div>
     </div>
