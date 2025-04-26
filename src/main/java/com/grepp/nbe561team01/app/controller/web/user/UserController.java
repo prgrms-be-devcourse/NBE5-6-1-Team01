@@ -4,6 +4,8 @@ import com.grepp.nbe561team01.app.controller.web.user.form.SigninRequest;
 import com.grepp.nbe561team01.app.controller.web.user.form.SignupRequest;
 import com.grepp.nbe561team01.app.controller.web.user.form.UpdateForm;
 import com.grepp.nbe561team01.app.model.auth.dto.Principal;
+import com.grepp.nbe561team01.app.model.order.OrderService;
+import com.grepp.nbe561team01.app.model.order.dto.OrderDto;
 import com.grepp.nbe561team01.app.model.user.UserService;
 import com.grepp.nbe561team01.app.model.user.code.Role;
 import com.grepp.nbe561team01.app.model.user.dto.UserDto;
@@ -12,6 +14,7 @@ import com.grepp.nbe561team01.infra.error.exceptions.PasswordDuplicatedException
 import com.grepp.nbe561team01.infra.error.exceptions.PasswordNotMatchedException;
 import com.grepp.nbe561team01.infra.response.ResponseCode;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -33,6 +36,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class UserController {
 
     private final UserService userService;
+    private final OrderService orderService;
 
     @GetMapping("signup")
     public String signup(SignupRequest form){
@@ -42,8 +46,7 @@ public class UserController {
     @PostMapping("signup")
     public String signup(
         @Valid SignupRequest form,
-        BindingResult bindingResult,
-        Model model
+        BindingResult bindingResult
     ){
       if(bindingResult.hasErrors()){ return "user/signup"; }
 
@@ -53,7 +56,7 @@ public class UserController {
     }
 
 
-  @DeleteMapping("remove")
+    @DeleteMapping("remove")
     public String removeUser(@RequestParam String email) {
         boolean result = userService.removeUser(email);
 
@@ -67,9 +70,19 @@ public class UserController {
         String email = authentication.getName();
         UserDto user = userService.findByEmail(email)
             .orElseThrow(() -> new CommonException(ResponseCode.UNAUTHORIZED));
-
         model.addAttribute("user", user);
+
+        List<OrderDto> orderList = orderService.findOrderByEmail(user.getEmail());
+        model.addAttribute("orderList", orderList);
         return "user/mypage";
+    }
+
+    @PostMapping("mypage")
+    public String mypage(@RequestParam("orderid") Integer orderId){
+
+        orderService.removeOrder(orderId);
+
+        return "redirect:/user/mypage";
     }
 
     @GetMapping("signin")

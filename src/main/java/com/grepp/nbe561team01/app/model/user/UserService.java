@@ -2,11 +2,9 @@ package com.grepp.nbe561team01.app.model.user;
 
 import com.grepp.nbe561team01.app.model.user.code.Role;
 import com.grepp.nbe561team01.app.model.user.dto.UserDto;
-import com.grepp.nbe561team01.infra.error.exceptions.CommonException;
 import com.grepp.nbe561team01.infra.error.exceptions.PasswordDuplicatedException;
 import com.grepp.nbe561team01.infra.error.exceptions.PasswordNotMatchedException;
 import com.grepp.nbe561team01.infra.response.ResponseCode;
-import com.grepp.nbe561team01.app.model.user.dto.UserDto;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +20,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
-    public Boolean isDuplicatedId(String id) {
+    public Boolean isDuplicatedEmail(String id) {
         return userRepository.existsUser(id);
     }
 
