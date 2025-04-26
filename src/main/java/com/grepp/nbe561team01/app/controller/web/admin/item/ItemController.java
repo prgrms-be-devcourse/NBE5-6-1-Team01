@@ -60,11 +60,11 @@ public class ItemController {
     }
 
     // 상품 수정
-    @PutMapping("{itemId}/update")
+    @PostMapping("{itemId}/update")
     public ResponseEntity<?> editItem(
         @PathVariable Long itemId,
-        @RequestBody ItemDto item) {
-        itemService.updateItem(itemId, item);
+        @ModelAttribute ItemRegistForm form) {
+        itemService.updateItem(itemId, form.toDto());
         return ResponseEntity.ok().build();
     }
 

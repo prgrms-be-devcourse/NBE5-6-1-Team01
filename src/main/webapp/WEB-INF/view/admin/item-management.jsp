@@ -119,7 +119,7 @@
   }
 
   // 상품 삭제
-  async function deleteItem(itemId) {
+  async function deleteItem() {
     if (!confirm('정말 삭제하시겠습니까?')) return;
 
     try {
@@ -152,6 +152,7 @@
 
   // 폼 제출 (등록 or 수정)
   const form = document.getElementById('itemForm');
+  console.log(form);
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -163,7 +164,7 @@
 
     if (itemId) {
       url = `/admin/item/\${itemId}/update`;
-      method = 'PUT';
+      method = 'POST';
     }
 
     const response = await fetch(url, {
