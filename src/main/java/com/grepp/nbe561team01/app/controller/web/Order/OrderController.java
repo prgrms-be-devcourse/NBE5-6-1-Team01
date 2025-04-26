@@ -19,7 +19,7 @@ public class OrderController {
 
     @GetMapping
     public String displayItems(Model model){
-        List<ItemDto> items = itemService.getAllItems();
+        List<ItemDto> items = itemService.findAll();
 
         model.addAttribute("items", items);
         return "index";
