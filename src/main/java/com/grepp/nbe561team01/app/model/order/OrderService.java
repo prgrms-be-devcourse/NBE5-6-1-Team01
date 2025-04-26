@@ -29,9 +29,6 @@ public class OrderService {
   
     @Transactional
     public List<OrderDto> findOrderByEmail(String email){
-        orderRepository.updateStatus(email);
-        int updateResult = orderRepository.updateStatusToDeliver(email);
-        log.info("updateResult: {}", updateResult);
         List<OrderDto> orderList = orderRepository.selectAllByEmail(email);
         return orderList;
     }
