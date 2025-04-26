@@ -15,6 +15,8 @@
 </div>
 <div class="card admin-card">
     <div class="row scrollable-content">
+<%--fixme: 아이템 여러 개 시 복수 출력 문제 해결--%>
+<%--TODO: 상세 버튼을 누르면 해당 주문 상세 정보 추가--%>
         <c:if test="${not empty orders}">
             <c:set var="currentEmail" value="" scope="page" />
             <ul>
