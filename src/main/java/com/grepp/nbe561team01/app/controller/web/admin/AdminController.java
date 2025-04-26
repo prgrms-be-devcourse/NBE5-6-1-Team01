@@ -64,6 +64,8 @@ public class AdminController {
 
         List<OrderInfoDto> orders = orderService.getAllOrders();
 
+        orderService.updateOrderStatusAll(orders);
+
         Map<Integer, List<String>> orderItemNamesMap = new HashMap<>();
         for (OrderInfoDto order : orders) {
             List<String> itemNames = orderService.getItemNamesByOrderId(order.getOrderId());

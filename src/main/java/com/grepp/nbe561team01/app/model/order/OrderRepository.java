@@ -44,4 +44,6 @@ public interface OrderRepository {
     @Update("update orders set deleted_at = now(), order_status = 'CANCEL' where order_id = #{orderId}")
     boolean removeOrder(Integer orderId);
 
+    @Update("update orders set order_status = 'DELIVER' where order_id = #{orderId}")
+    int updateStatusToDeliver(Integer orderId);
 }
