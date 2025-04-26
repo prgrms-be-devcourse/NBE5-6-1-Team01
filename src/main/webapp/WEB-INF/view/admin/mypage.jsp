@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <%@ include file="/WEB-INF/view/include/static.jsp" %>
 </head>
-<body>
+<body class="container-fluid">
 <%@ include file="/WEB-INF/view/include/admin-header.jsp"%>
 <div class="row justify-content-center m-4">
     <h1 class="text-center">Admin Page</h1>
@@ -16,9 +16,7 @@
 <div class="card admin-card">
     <div class="row scrollable-content">
         <c:if test="${not empty orders}">
-
             <c:set var="currentEmail" value="" scope="page" />
-
             <ul>
                 <c:forEach items="${orders}" var="order">
                     <c:if test="${order.email ne currentEmail}">
