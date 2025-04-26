@@ -89,9 +89,8 @@ hr {
 #alert-wrong-login{
   display: flex;
   color: crimson;
-  font-size: 1.3rem;
-  margin-bottom: 15px;
-  justify-content: center;
+  margin-left: 4px;
+  margin-bottom: 5px;
 }
 
 .admin-header {
