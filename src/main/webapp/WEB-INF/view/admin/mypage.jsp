@@ -15,17 +15,29 @@
     <h1 class="text-center">Admin Page</h1>
 </div>
 <div class="card">
-    <div class="row">
-        <h2>${admin.email}</h2>
-        <!-- TODO: 주문내역 목록 불러오기 (DB 데이터 조회 확인을 임시로 비번으로 해둠) -->
-        <h3>주문내역</h3>
-        <p>${admin.password}</p>
-        <div class="text-end mt-3 mb-3">
+        <div class="row scrollable-content">
+            <%-- TODO 유저들 주문 내역 출력 : 유저 -> 주소 -> 주문시간 --%>
+            <c:if test="${not empty orders}">
+                <c:set var="currentEmail" value="" scope="page" />
+
+                <c:forEach var="order" items="${orders}">
+                    <c:if test="${order.email ne currentEmail}">
+                        <c:set var="currentEmail" value="${order.email}" scope="page" />
+                        <h5 class="mt-3">${order.email}</h5>
+                    </c:if>
+                    <div class="ms-3 mb-2">
+                        <small>${order.createdAt}, ${order.address}, ${order.orderStatus}</small>
+                    </div>
+                </c:forEach>
+            </c:if>
+            <c:if test="${empty orders}">
+                <h3>현재 주문 내역이 없습니다</h3>
+            </c:if>
+        </div>
+        <div class="row text-end mt-3 mb-3">
             <form action="/user/update" method="get">
                 <button type="submit" class="btn btn-outline-dark">비밀번호 수정</button>
             </form>
         </div>
-    </div>
-</div>
 </body>
 </html>
