@@ -3,8 +3,8 @@
 <%@include file="/WEB-INF/view/include/page.jsp" %>
 <html>
 <head>
-<%--    <title>Hello, World!</title>--%>
-<%--    <!-- Required meta tags -->--%>
+    <%--    <title>Hello, World!</title>--%>
+    <%--    <!-- Required meta tags -->--%>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <%@include file="/WEB-INF/view/include/static.jsp" %>
@@ -15,29 +15,35 @@
     <h1 class="text-center">Admin Page</h1>
 </div>
 <div class="card">
-        <div class="row scrollable-content">
-            <%-- TODO 유저들 주문 내역 출력 : 유저 -> 주소 -> 주문시간 --%>
-            <c:if test="${not empty orders}">
-                <c:set var="currentEmail" value="" scope="page" />
+    <div class="row scrollable-content">
+        <%-- TODO 유저들 주문 내역 출력 : 유저 -> 주소 -> 주문시간 --%>
+        <c:if test="${not empty orders}">
+            <c:set var="currentEmail" value="" scope="page" />
 
-                <c:forEach var="order" items="${orders}">
-                    <c:if test="${order.email ne currentEmail}">
-                        <c:set var="currentEmail" value="${order.email}" scope="page" />
-                        <h5 class="mt-3">${order.email}</h5>
-                    </c:if>
-                    <div class="ms-3 mb-2">
-                        <small>${order.createdAt}, ${order.address}, ${order.orderStatus}</small>
-                    </div>
-                </c:forEach>
-            </c:if>
-            <c:if test="${empty orders}">
-                <h3>현재 주문 내역이 없습니다</h3>
-            </c:if>
-        </div>
-        <div class="row text-end mt-3 mb-3">
-            <form action="/user/update" method="get">
-                <button type="submit" class="btn btn-outline-dark">비밀번호 수정</button>
-            </form>
-        </div>
+            <c:forEach var="order" items="${orders}">
+                <c:if test="${order.email ne currentEmail}">
+                    <c:set var="currentEmail" value="${order.email}" scope="page" />
+                    <h5 class="mt-3">${order.email}</h5>
+                </c:if>
+                <div class="ms-3 mb-2">
+                    <small>
+                            ${order.createdAt}, ${order.address}, item:
+                        <c:forEach var="item" items="${itemMap[order.orderId]}" varStatus="itemStatus">
+                            ${item}<c:if test="${!itemStatus.last}">, </c:if>
+                        </c:forEach>
+                        , ${order.orderStatus}
+                    </small>
+                </div>
+            </c:forEach>
+        </c:if>
+        <c:if test="${empty orders}">
+            <h3>현재 주문 내역이 없습니다</h3>
+        </c:if>
+    </div>
+    <div class="row text-end mt-3 mb-3">
+        <form action="/user/update" method="get">
+            <button type="submit" class="btn btn-outline-dark">주문 삭제</button>
+        </form>
+    </div>
 </body>
 </html>

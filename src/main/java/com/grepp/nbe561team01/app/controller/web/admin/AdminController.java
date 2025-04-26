@@ -2,14 +2,16 @@ package com.grepp.nbe561team01.app.controller.web.admin;
 
 import com.grepp.nbe561team01.app.controller.web.user.form.SignupRequest;
 import com.grepp.nbe561team01.app.model.order.OrderService;
-import com.grepp.nbe561team01.app.model.order.dto.OrderInfoDto;
+import com.grepp.nbe561team01.app.model.order.dto.admin.OrderInfoDto;
 import com.grepp.nbe561team01.app.model.user.UserService;
 import com.grepp.nbe561team01.app.model.user.code.Role;
 import com.grepp.nbe561team01.app.model.user.dto.UserDto;
 import com.grepp.nbe561team01.infra.error.exceptions.CommonException;
 import com.grepp.nbe561team01.infra.response.ResponseCode;
 import jakarta.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -59,12 +61,19 @@ public class AdminController {
         UserDto admin = adminService.findByEmail(email)
             .orElseThrow(() -> new CommonException(ResponseCode.UNAUTHORIZED));
 
-        // 모든 유저의 주문 정보 조회
         List<OrderInfoDto> orders = orderService.getAllOrders();
-        log.info("order list size = {}", orders.size());
 
+        Map<String, List<String>> orderItemNamesMap = new HashMap<>();
+        for (OrderInfoDto order : orders) {
+            List<String> itemNames = orderService.getItemNamesByOrderId(order.getOrderId());
+            orderItemNamesMap.put(order.getOrderId(), itemNames);
+        }
+
+        model.addAttribute("orderItemNamesMap", orderItemNamesMap);
         model.addAttribute("admin", admin);
         model.addAttribute("orders", orders);
+        model.addAttribute("itemMap", orderItemNamesMap);
+
         return "admin/mypage";
     }
 
