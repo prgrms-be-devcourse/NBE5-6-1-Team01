@@ -74,6 +74,8 @@ public class UserController {
             .orElseThrow(() -> new CommonException(ResponseCode.UNAUTHORIZED));
         model.addAttribute("user", user);
 
+        orderService.updateOrderStatusByUser(user.getEmail());
+
         List<OrderDto> orderList = orderService.findOrderByEmail(user.getEmail());
         model.addAttribute("orderList", orderList);
 

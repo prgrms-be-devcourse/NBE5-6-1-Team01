@@ -79,4 +79,9 @@ public class OrderService {
             }
         }
     }
+
+    @Transactional
+    public void updateOrderStatusByUser(String email){
+        orderRepository.updateStatusByUserToDeliver(email);
+    }
 }
