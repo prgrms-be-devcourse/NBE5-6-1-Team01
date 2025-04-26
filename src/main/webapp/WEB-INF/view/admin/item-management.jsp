@@ -45,7 +45,8 @@
                         <input type="number" class="form-control" id="itemPrice" name="itemPrice" placeholder="상품가격 입력">
                     </div>
                     <hr>
-                    <button type="submit" class="btn btn-dark col-12" id="submitBtn">등록</button>
+                    <button type="submit" class="btn btn-dark col-12 mb-2" id="submitBtn">등록</button>
+                    <button type="reset" class="btn btn-secondary col-12" id="cancelBtn">취소</button>
                 </form>
             </div>
         </div>
@@ -152,7 +153,6 @@
 
   // 폼 제출 (등록 or 수정)
   const form = document.getElementById('itemForm');
-  console.log(form);
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
 
@@ -184,6 +184,20 @@
     } else {
       alert(itemId ? '상품 수정 실패' : '상품 등록 실패');
     }
+  });
+
+  // 등록 or 수정 취소
+  form.addEventListener('reset', async (event) => {
+    event.preventDefault();
+    form.reset();
+
+    document.getElementById('form-title').innerText = '상품 등록';
+    document.getElementById('submitBtn').innerText = '등록';
+
+    document.getElementById('itemId').value = '';
+    document.getElementById('itemType').value = '';
+    document.getElementById('itemName').value = '';
+    document.getElementById('itemPrice').value = '';
   });
 </script>
 
