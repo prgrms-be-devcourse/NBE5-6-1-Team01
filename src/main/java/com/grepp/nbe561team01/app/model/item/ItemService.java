@@ -18,4 +18,9 @@ public class ItemService {
     public List<ItemDto> findAll() {
         return itemRepository.selectAll();
     }
+
+    @Transactional
+    public boolean deleteItem(Long itemId) {
+        return itemRepository.removeItem(itemId);
+    }
 }

@@ -35,4 +35,17 @@ public class ItemController {
     public List<ItemDto> getItemList() {
         return itemService.findAll();
     }
+
+    // 상품 삭제
+    @DeleteMapping("{itemId}/remove")
+    public ResponseEntity<String> deleteItem(@PathVariable Long itemId) {
+        boolean isDeleted = itemService.deleteItem(itemId);
+
+        if (isDeleted) {
+            return ResponseEntity.ok("상품 삭제 완료");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당하는 상품을 찾을 수 없습니다.");
+        }
+    }
+
 }

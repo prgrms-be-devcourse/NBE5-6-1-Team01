@@ -12,4 +12,7 @@ public interface ItemRepository {
 
     @Select("select * from items")
     List<ItemDto> selectAll();
+
+    @Delete("delete from items where ITEM_ID = #{itemId}")
+    boolean removeItem(Long itemId);
 }

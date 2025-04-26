@@ -55,21 +55,28 @@
         const li = document.createElement("li");
         li.classList.add("list-group-item", "d-flex", "mt-3");
 
+
         li.innerHTML = `
-  <div class="row w-100">
-<div class="col-2">
-      <img class="img-fluid" src="\${item.img}" alt="사진 오류"/>
-    </div>
-    <div class="col">
-      <div class="row text-muted">\${item.itemType || '정보 없음'}</div>
-      <div class="row">\${item.itemName || '상품명 없음'}</div>
-    </div>
-    <div class="col text-center price">\${(item.itemPrice || item.itemPrice == 0) ? item.itemPrice + '원' : '가격 정보 없음'}</div>
-    <div class="col text-end action">
-      <a class="btn btn-small btn-outline-dark" href="#" data-item-id="\${item.itemId}">삭제</a>
-    </div>
-  </div>
-`;
+          <div class="row w-100">
+        <div class="col-2">
+              <img class="img-fluid" src="\${item.img}" alt="사진 오류"/>
+            </div>
+            <div class="col">
+              <div class="row text-muted">\${item.itemType || '정보 없음'}</div>
+              <div class="row">\${item.itemName || '상품명 없음'}</div>
+            </div>
+            <div class="col text-center price">\${(item.itemPrice || item.itemPrice == 0) ? item.itemPrice + '원' : '가격 정보 없음'}</div>
+            <div class="col text-end action">
+              <a class="btn btn-small btn-outline-dark" href="#" data-item-id="\${item.itemId}">삭제</a>
+            </div>
+          </div>
+        `;
+        const deleteButton = li.querySelector("a");
+        deleteButton.addEventListener("click", async (event) => {
+          const itemId = event.target.getAttribute("data-item-id");
+          await deleteItem(itemId);
+        });
+        container.appendChild(li);
       });
 
     } catch (error) {
@@ -78,6 +85,26 @@
           "<li class='list-group-item'>데이터를 불러오는 데 실패했습니다.</li>";
     }
   });
+
+  // 상품 삭제 함수
+  async function deleteItem(itemId) {
+    try {
+      const response = await fetch(`/admin/item/\${itemId}/remove`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        alert('상품이 삭제되었습니다.');
+        const itemElement = document.querySelector(`[data-item-id='\${itemId}']`).closest('li');
+        itemElement.remove();
+      } else {
+        throw new Error('상품 삭제 실패');
+      }
+    } catch (error) {
+      console.error('삭제 실패:', error);
+      alert('상품 삭제에 실패했습니다.');
+    }
+  }
 
 </script>
 
