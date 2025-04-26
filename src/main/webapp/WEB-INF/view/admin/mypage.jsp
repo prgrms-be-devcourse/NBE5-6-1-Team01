@@ -16,7 +16,6 @@
 </div>
 <div class="card">
     <div class="row scrollable-content">
-        <%-- TODO 유저들 주문 내역 출력 : 유저 -> 주소 -> 주문시간 --%>
         <c:if test="${not empty orders}">
             <c:set var="currentEmail" value="" scope="page" />
 
@@ -27,11 +26,10 @@
                 </c:if>
                 <div class="ms-3 mb-2">
                     <small>
-                            ${order.createdAt}, ${order.address}, item:
+                            ${order.createdAt}, ${order.address}, item: (${order.orderStatus})
                         <c:forEach var="item" items="${itemMap[order.orderId]}" varStatus="itemStatus">
                             ${item}<c:if test="${!itemStatus.last}">, </c:if>
                         </c:forEach>
-                        , ${order.orderStatus}
                     </small>
                 </div>
             </c:forEach>
