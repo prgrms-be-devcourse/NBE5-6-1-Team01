@@ -13,12 +13,12 @@ CREATE TABLE USERS
 DROP TABLE IF EXISTS `ITEMS`;
 CREATE TABLE `ITEMS`
 (
-    `ITEM_ID`    int          PRIMARY KEY   COMMENT '아이템번호',
-    `ITEM_TYPE`  VARCHAR(20)                COMMENT '아이템타입',
-    `ITEM_NAME`  VARCHAR(50)  NOT NULL      COMMENT '아이템이름',
-    `ITEM_PRICE` int          NOT NULL      COMMENT '아이템가격',
-    `STOCK`      int          DEFAULT 100   COMMENT '재고',
-    `IMG`        VARCHAR(255)               COMMENT '아이템사진'
+    `ITEM_ID`    int          AUTO_INCREMENT PRIMARY KEY   COMMENT '아이템번호',
+    `ITEM_TYPE`  VARCHAR(20)                               COMMENT '아이템타입',
+    `ITEM_NAME`  VARCHAR(50)  NOT NULL                     COMMENT '아이템이름',
+    `ITEM_PRICE` int          NOT NULL                     COMMENT '아이템가격',
+    `STOCK`      int          DEFAULT 100                  COMMENT '재고',
+    `IMG`        VARCHAR(255)                              COMMENT '아이템사진'
 );
 
 
