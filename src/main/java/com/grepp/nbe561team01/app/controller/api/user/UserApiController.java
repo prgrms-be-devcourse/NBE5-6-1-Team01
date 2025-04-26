@@ -18,10 +18,10 @@ public class UserApiController {
 
     private final UserService userService;
 
-    @GetMapping("exists/{id}")
-    public ResponseEntity<ApiResponse<Boolean>> existsId(@PathVariable String id){
+    @GetMapping("exists/{email}")
+    public ResponseEntity<ApiResponse<Boolean>> existsEmail(@PathVariable String email){
         return ResponseEntity.ok(ApiResponse.success(
-                userService.isDuplicatedId(id)
+                userService.isDuplicatedEmail(email)
         ));
     }
 }
