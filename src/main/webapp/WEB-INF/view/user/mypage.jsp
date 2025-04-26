@@ -3,8 +3,6 @@
 <%@include file="/WEB-INF/view/include/page.jsp" %>
 <html>
 <head>
-<%--    <title>Hello, World!</title>--%>
-<%--    <!-- Required meta tags -->--%>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <%@include file="/WEB-INF/view/include/static.jsp" %>
@@ -35,24 +33,41 @@
         <ul class="list-group products">
             <!-- 아이템 리스트 -->
             <c:forEach items="${orderList}" var="order">
-                <li class="list-group-item mt-1">
-                    <div class="row-button">
-                        <h5><c:out value="${order.createdAt}"/></h5>
-
-                        <c:if test="${order.orderStatus eq 'ORDER'}">
-                            <div class="text-end mt-3 mb-3">
-                                <form action="/user/mypage" method="post" onsubmit="return confirm('정말로 주문을 취소하시겠습니까?');">
-                                    <input type="hidden" name="orderid" value="${order.orderId}">
-                                    <button type="submit" class="btn btn-outline-dark">취소</button>
-                                </form>
-                            </div>
-                        </c:if>
+                <li class="list-group-item" style="padding-left: 30px; padding-right: 30px;">
+                    <!-- 주문 내역 상단 주문일자, 취소 버튼 -->
+                    <div>
+                        <div class="row-button">
+                            <h5><c:out value="${order.createdAt}"/></h5>
+                            <c:if test="${order.orderStatus eq 'ORDER'}">
+                                <div class="text-end mt-3 mb-3">
+                                    <form action="/user/mypage" method="post" onsubmit="return confirm('정말로 주문을 취소하시겠습니까?');">
+                                        <input type="hidden" name="orderid" value="${order.orderId}">
+                                        <button type="submit" class="btn btn-outline-dark">취소</button>
+                                    </form>
+                                </div>
+                            </c:if>
+                        </div>
+                        <h6>주소: <c:out value="${order.address}"/></h6>
                     </div>
-                    <h6>주소: <c:out value="${order.address}"/></h6>
 
-                    <div class="row-button">
+                    <!-- 주문 상세 내역 -->
+                    <div class="w-100">
+                        <c:forEach items="${orderItemList[order.orderId]}" var="item">
+                            <div class="row w-100 border p-2 mb-2 align-items-center">
+                                <div class="col-6 text-start">상품명: <c:out value="${item.itemName}"/></div>
+                                <div class="col-2 text-start">가격: <c:out value="${item.itemPrice}"/>원</div>
+                                <div class="col-2 text-start">수량: <c:out value="${item.itemCount}"/>개</div>
+
+                                <c:set var="totalPrice" value="${item.itemPrice * item.itemCount}" />
+                                <div class="col-2 text-start">총액: <c:out value="${totalPrice}"/>원</div>
+                            </div>
+                        </c:forEach>
+                    </div>
+
+                    <!-- 하단 전체 금액, 주문 상태 -->
+                    <div class="row-button" style="margin-top: 30px">
                         <h5 class="left">전체 금액: <c:out value="${order.totalPrice}"/>원</h5>
-                        <h6 class="right"><c:out value="${order.orderStatus}"/></h6>
+                        <h5 class="right"><c:out value="${order.orderStatus}"/></h5>
                     </div>
                 </li>
             </c:forEach>
