@@ -27,7 +27,7 @@
                 <h5 class="mt-3">${emailEntry.key}</h5>
                 <ul>
                     <c:forEach var="orderEntry" items="${emailEntry.value}">
-                        <h6 style="margin-top: 7px">주소: <c:out value="${orderEntry.key}"/></h6>
+                        <h6 style="margin-top: 7px">주소: ${orderEntry.key}(${orderEntry.value.postcode})</h6>
                         <li class="list-group-item mt-1">
                             <div class="row-button admin-order-info">
                                 <h5>${orderEntry.value.createdAt} (order-id: ${orderEntry.value.orderId})</h5>

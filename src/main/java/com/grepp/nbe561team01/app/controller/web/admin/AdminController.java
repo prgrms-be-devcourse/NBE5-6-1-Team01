@@ -77,6 +77,7 @@ public class AdminController {
             OrderInfoDto orderInfo = new OrderInfoDto(
                 order.getOrderId(),
                 order.getCreatedAt(),
+                order.getPostcode(),
                 order.getOrderStatus(),
                 order.getTotalPrice(),
                 itemNames

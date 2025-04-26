@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class OrderInfoDto {
     private Integer orderId;
     private LocalDateTime createdAt;
+    private Integer postcode;
     private OrderStatus orderStatus;
     private Integer totalPrice;
     private List<String> itemNames;
