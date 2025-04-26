@@ -15,6 +15,11 @@ public class ItemService {
     private final ItemRepository itemRepository;
 
     @Transactional
+    public void addItem(ItemDto itemDto) {
+        itemRepository.insertItem(itemDto);
+    }
+
+    @Transactional
     public List<ItemDto> findAll() {
         return itemRepository.selectAll();
     }

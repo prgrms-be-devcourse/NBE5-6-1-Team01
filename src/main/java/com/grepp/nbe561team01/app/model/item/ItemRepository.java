@@ -10,6 +10,10 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface ItemRepository {
 
+    @Insert("insert into items(ITEM_TYPE, ITEM_NAME, ITEM_PRICE)"
+        + "values (#{itemType}, #{itemName}, #{itemPrice})")
+    void insertItem(ItemDto itemDto);
+
     @Select("select * from items")
     List<ItemDto> selectAll();
 
