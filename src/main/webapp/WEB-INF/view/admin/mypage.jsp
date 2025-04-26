@@ -26,7 +26,7 @@
                         <h5 class="mt-3">${order.email}</h5>
                     </c:if>
                     <li class="list-group-item mt-1">
-                        <div class="row-button">
+                        <div class="row-button admin-order-info">
                             <h5>${order.createdAt} (${order.orderId})</h5>
                             <c:if test="${order.orderStatus eq 'ORDER'}">
                                 <div class="text-end mt-3 mb-3">

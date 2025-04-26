@@ -120,3 +120,12 @@ hr {
   padding-top: 15px;
   height: 518px;
 }
+
+.admin-order-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.admin-order-info form {
+  margin: 0;
+}
