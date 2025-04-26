@@ -115,3 +115,8 @@ hr {
  max-height: 400px;
  overflow-y: auto;
 }
+
+.admin-card {
+  padding-top: 15px;
+  height: 518px;
+}
