@@ -12,6 +12,8 @@
   <bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
     <property name="dataSource" ref="dataSource"/>
 
+    <property name="mapperLocations" value="classpath*:mapper/**/*.xml" />
+    <property name="typeAliasesPackage" value="com.grepp.nbe561team01.app.model" />
     <property name="mapperLocations" value="classpath*:mybatis/mapper/**/*.xml" />
 
     <property name="configuration">
