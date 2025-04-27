@@ -93,8 +93,6 @@
 <script>
   function addItem(button) {
     const item = button.closest('li');
-    console.log('item: ', item);
-    console.log('item.dataset.itemId: ', item.dataset.itemId);
     let count = parseInt(item.dataset.count, 10);
     const stock = parseInt(item.dataset.stock, 10);
 
@@ -128,8 +126,6 @@
     const count = parseInt(item.dataset.count, 10);
     const stock = parseInt(item.dataset.stock, 10);
 
-    console.log(count);
-    console.log(itemId);
     // Summary에 수량 갱신
     const countBadge = document.getElementById(`summary-count-`+itemId);
     console.log(' 찾은 countBadge: ', countBadge);
