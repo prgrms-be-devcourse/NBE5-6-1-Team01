@@ -3,6 +3,7 @@ package com.grepp.nbe561team01.app.model.order;
 import com.grepp.nbe561team01.app.model.order.dto.OrderItemDto;
 import com.grepp.nbe561team01.app.model.order.dto.admin.OrderInfoDto;
 import com.grepp.nbe561team01.app.model.order.dto.OrderDto;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,4 +43,14 @@ public class OrderService {
     public List<OrderItemDto> findItemById(Integer orderId) {
         return orderRepository.selectOrderItemById(orderId);
     }
+
+    public List<Integer> getTotalOrderStatuses() {
+        List<Integer> orderStatuses = new ArrayList<>();
+        orderStatuses.add(orderRepository.countOrders());
+        orderStatuses.add(orderRepository.countCancelledStatus());
+        orderStatuses.add(orderRepository.countDeliverOrderStatus());
+
+        return orderStatuses;
+    }
+
 }

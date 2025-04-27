@@ -68,6 +68,7 @@ public class AdminController {
             .orElseThrow(() -> new CommonException(ResponseCode.UNAUTHORIZED));
 
         List<OrderDto> orders = orderService.getAllOrders();
+        List<Integer> statuses = orderService.getTotalOrderStatuses();
 
         // email-address-OrderInfo Map
         Map<String, Map<String, List<OrderInfoDto>>> emailAddressOrderMap = new LinkedHashMap<>();
@@ -91,6 +92,7 @@ public class AdminController {
 
         model.addAttribute("admin", admin);
         model.addAttribute("orderMap", emailAddressOrderMap);
+        model.addAttribute("statuses", statuses);
 
         return "admin/mypage";
     }

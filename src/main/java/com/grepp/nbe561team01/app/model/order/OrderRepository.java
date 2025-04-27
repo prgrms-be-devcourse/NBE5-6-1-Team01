@@ -30,4 +30,12 @@ public interface OrderRepository {
     @Update("update orders set deleted_at = now(), order_status = 'CANCEL' where order_id = #{orderId}")
     boolean removeOrder(Integer orderId);
 
+    @Select("select count(order_id) from orders")
+    int countOrders();
+
+    @Select("select count(order_id) from orders where order_status = 'CANCEL'")
+    int countCancelledStatus();
+
+    @Select("select count(order_id) from orders where order_status = 'DELIVER'")
+    int countDeliverOrderStatus();
 }
