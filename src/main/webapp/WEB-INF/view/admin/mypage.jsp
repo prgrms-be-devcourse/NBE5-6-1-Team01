@@ -69,13 +69,13 @@
     <div class="button-container text-center mt-4">
         <h5 class="order-status">
             <span>전체 주문 건:
-                <span class="badge bg-primary">${statuses[0]}</span>
+                <span class="badge" style="background-color: black">${statuses[0]}</span>
             </span>
             <span style="margin-left: 15px">
-                취소된 주문 건: <span class="badge bg-danger">${statuses[1]}</span>
+                취소된 주문 건: <span class="badge" style="background-color: #616161;">${statuses[1]}</span>
             </span>
             <span style="margin-left: 15px">
-                배송중: <span class="badge bg-warning">${statuses[2]}</span>
+                배송중: <span class="badge" style="background-color: #e0e0e0; color: black">${statuses[2]}</span>
             </span>
         </h5>
     </div>
