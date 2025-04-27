@@ -32,7 +32,7 @@
                         data-stock="${item.stock}"
                         data-price="${item.itemPrice}"
                         data-count="0">
-                        <div class="col-2"><img class="img-fluid" src="${item.img}" alt="사진 오류"/></div>
+                        <div class="col-2"><img class="img-fluid" src="${item.savePath}" alt="사진 오류"/></div>
                         <div class="col">
                             <div class="row text-muted"><c:out value="${item.itemType}"/> </div>
                             <div class="row"><c:out value="${item.itemName}"/> </div>
