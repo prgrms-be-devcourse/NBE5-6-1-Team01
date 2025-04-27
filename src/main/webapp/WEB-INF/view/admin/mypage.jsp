@@ -19,9 +19,9 @@
     <h1 class="text-center">Admin Page</h1>
 </div>
 <div class="card admin-card">
+    <h5 style="margin-left: 20px">전체 유저 주문목록</h5>
     <div class="row scrollable-content">
         <c:if test="${not empty orderMap}">
-            <h5>전체 유저 주문목록</h5>
             <c:forEach var="emailEntry" items="${orderMap}">
                 <h5 class="mt-3">${emailEntry.key}</h5>
                 <ul>
