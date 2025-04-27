@@ -78,6 +78,8 @@ public class AdminController {
             List<String> itemNames = orderService.getItemNamesByOrderId(order.getOrderId());
             OrderInfoDto orderInfo = new OrderInfoDto(
                 order.getOrderId(),
+                order.getEmail(),
+                order.getAddress(),
                 order.getCreatedAt(),
                 order.getPostcode(),
                 order.getOrderStatus(),

@@ -61,10 +61,10 @@ public class OrderService {
     }
 
     @Transactional
-    public void updateOrderStatusAll(List<OrderInfoDto> orderList) {
+    public void updateOrderStatusAll(List<OrderDto> orderList) {
         LocalDateTime now = LocalDateTime.now();
 
-        for (OrderInfoDto info : orderList) {
+        for (OrderDto info : orderList) {
             // STATUS가 ORDER일 때만 실행
             if (!"ORDER".equals(info.getOrderStatus())) continue;
 

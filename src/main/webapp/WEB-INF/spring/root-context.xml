@@ -14,7 +14,6 @@
 
     <property name="mapperLocations" value="classpath*:mapper/**/*.xml" />
     <property name="typeAliasesPackage" value="com.grepp.nbe561team01.app.model" />
-    <property name="mapperLocations" value="classpath*:mybatis/mapper/**/*.xml" />
 
     <property name="configuration">
       <bean class="org.apache.ibatis.session.Configuration">
