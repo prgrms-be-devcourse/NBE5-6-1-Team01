@@ -26,7 +26,11 @@ public class OrderController {
     @GetMapping
     public String displayItems(Model model){
         List<ItemDto> items = itemService.findAll();
-
+        for(ItemDto item : items){
+            if (item.getImg() != null){
+                item.setSavePath(item.getImg().getUrl().replace("download","upload"));
+            }
+        }
         model.addAttribute("items", items);
         return "index";
     }
