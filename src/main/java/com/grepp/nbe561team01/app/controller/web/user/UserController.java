@@ -6,6 +6,7 @@ import com.grepp.nbe561team01.app.controller.web.user.form.UpdateRequest;
 import com.grepp.nbe561team01.app.model.auth.dto.Principal;
 import com.grepp.nbe561team01.app.model.order.OrderService;
 import com.grepp.nbe561team01.app.model.order.dto.OrderDto;
+import com.grepp.nbe561team01.app.model.order.dto.OrderItemDto;
 import com.grepp.nbe561team01.app.model.user.UserService;
 import com.grepp.nbe561team01.app.model.user.code.Role;
 import com.grepp.nbe561team01.app.model.user.dto.UserDto;
@@ -15,6 +16,7 @@ import com.grepp.nbe561team01.infra.error.exceptions.PasswordNotMatchedException
 import com.grepp.nbe561team01.infra.response.ResponseCode;
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -70,8 +72,14 @@ public class UserController {
             .orElseThrow(() -> new CommonException(ResponseCode.UNAUTHORIZED));
         model.addAttribute("user", user);
 
-        List<OrderDto> orderList = orderService.findOrderByEmail(user.getEmail());
+        orderService.updateOrderStatusByUser(user.getEmail());
+
+        Map<String, List<OrderDto>> orderList = orderService.findOrderAllByEmail(user.getEmail());
         model.addAttribute("orderList", orderList);
+
+        Map<Integer, List<OrderItemDto>> orderItemList = orderService.findOrderItemByOrder(orderList);
+        model.addAttribute("orderItemList", orderItemList);
+
         return "user/mypage";
     }
 

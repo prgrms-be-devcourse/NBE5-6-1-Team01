@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grepp.nbe561team01.app.model.order.OrderRepository">
+
+  <update id="updateStatusByUserToDeliver">
+    UPDATE orders
+    SET order_status = 'DELIVER'
+    WHERE email = #{email}
+    AND order_status = 'ORDER'
+    AND NOW() >=
+    CASE
+    WHEN TIME(created_at) &lt; '14:00:00'
+    THEN DATE_ADD(DATE(created_at), INTERVAL 14 HOUR)
+    ELSE DATE_ADD(DATE_ADD(DATE(created_at), INTERVAL 1 DAY), INTERVAL 14 HOUR)
+    END
+  </update>
+
+  <select id="selectOrderByEmail" parameterType="string" resultType="com.grepp.nbe561team01.app.model.order.dto.OrderDto">
+    SELECT
+      MIN(order_id) AS order_id,
+      email,
+      address,
+      postcode,
+      SUM(total_price) AS total_price,
+      MIN(created_at) AS created_at,
+      'ORDER' AS order_status
+    FROM orders
+    WHERE email = #{email}
+      AND order_status = 'ORDER'
+    GROUP BY email, address, postcode
+  </select>
+
+</mapper>

@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class OrderInfoDto {
     private Integer orderId;
+    private String email;
+    private String address;
     private LocalDateTime createdAt;
     private Integer postcode;
     private OrderStatus orderStatus;

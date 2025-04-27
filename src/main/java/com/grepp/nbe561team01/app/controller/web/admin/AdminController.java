@@ -69,6 +69,8 @@ public class AdminController {
         List<OrderDto> orders = orderService.getAllOrders();
         List<Integer> statuses = orderService.getTotalOrderStatuses();
 
+        orderService.updateOrderStatusAll(orders);
+
         // email-address-OrderInfo Map
         Map<String, Map<String, List<OrderInfoDto>>> emailAddressOrderMap = new LinkedHashMap<>();
         for (OrderDto order : orders) {
@@ -76,6 +78,8 @@ public class AdminController {
             List<String> itemNames = orderService.getItemNamesByOrderId(order.getOrderId());
             OrderInfoDto orderInfo = new OrderInfoDto(
                 order.getOrderId(),
+                order.getEmail(),
+                order.getAddress(),
                 order.getCreatedAt(),
                 order.getPostcode(),
                 order.getOrderStatus(),
