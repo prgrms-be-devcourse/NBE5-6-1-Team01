@@ -18,11 +18,14 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.CacheControlConfig;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
@@ -34,11 +37,31 @@ public class SecurityConfig {
     @Value("${remember-me.key}")
     private String rememberMeKey;
 
+
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         return http.getSharedObject(AuthenticationManagerBuilder.class)
             .build();
     }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return (request, response, accessDeniedException) -> {
+            Authentication auth = (Authentication) request.getUserPrincipal();
+
+            boolean isAdmin = auth.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .anyMatch(role -> role.equals("ROLE_ADMIN"));
+
+            if (isAdmin) {
+                response.sendRedirect("/admin/mypage");
+            } else {
+                response.sendRedirect("/");
+            }
+
+        };
+    }
+
 
     @Bean
     public AuthenticationSuccessHandler successHandler() {
@@ -69,20 +92,27 @@ public class SecurityConfig {
         // csrf 설정 (delete 요청 등에서 필요에 따라 활성화)
          http.csrf(csrf -> csrf.disable());
 
+         http
+             .headers(headers -> headers.cacheControl(
+                 CacheControlConfig::disable
+             ));
+
         http
             .authorizeHttpRequests((requests) -> requests
-
                 .requestMatchers(GET, "/user/signin", "/user/signup").anonymous()
                 .requestMatchers(POST, "/user/signin", "/user/signup").anonymous()
-                .requestMatchers(GET, "admin/signup").permitAll()
-                .requestMatchers(POST, "admin/signup").permitAll()
-                .requestMatchers(GET, "admin/mypage", "admin/itemManagement").hasRole("ADMIN")
+                .requestMatchers(GET, "/admin/signup").permitAll()
+                .requestMatchers(POST, "/admin/signup").permitAll()
+                .requestMatchers(GET, "admin/mypage", "/admin/itemManagement").hasRole("ADMIN")
                 .requestMatchers(GET, "/api/**").permitAll()
-                .requestMatchers(GET, "/", "/user/logout", "/user/mypage").hasAnyRole("ADMIN", "USER")
+                .requestMatchers(GET, "/", "/user/logout", "/user/mypage").hasRole( "USER")
                 .requestMatchers(PUT, "/**").permitAll()  // PUT
-                .requestMatchers(DELETE, "/**").permitAll()  // DELETE
+                .requestMatchers(DELETE, "/**").hasAnyRole("ADMIN", "USER")  // DELETE
                 .requestMatchers("/assets/**").permitAll() // 정적 리소스 허용
                 .anyRequest().authenticated()
+            )
+            .exceptionHandling(exception -> exception
+                .accessDeniedHandler(accessDeniedHandler())
             )
             .formLogin((form) -> form
                 .loginPage("/user/signin")
@@ -91,7 +121,7 @@ public class SecurityConfig {
                 .loginProcessingUrl("/user/signin")
                 .defaultSuccessUrl("/")
                 .successHandler(successHandler())
-                .permitAll()
+//                .permitAll()
             )
             .rememberMe(rememberMe -> rememberMe.key(rememberMeKey))
             .logout(logout -> logout

@@ -18,7 +18,9 @@ import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,6 +40,12 @@ public class AdminController {
 
     @GetMapping("signup")
     public String signup(SignupRequest form){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // 로그인 되어 있으면
+        if (authentication != null && authentication.isAuthenticated() &&
+            !(authentication instanceof AnonymousAuthenticationToken)) {
+            return "redirect:/";  // 메인 페이지로 리다이렉트
+        }
         return "admin/signup";
     }
 
