@@ -30,6 +30,7 @@
                     <li class="list-group-item d-flex mt-3"
                         data-item-id="${item.itemId}"
                         data-stock="${item.stock}"
+                        data-price="${item.itemPrice}"
                         data-count="0">
                         <div class="col-2"><img class="img-fluid" src="${item.img}" alt="사진 오류"/></div>
                         <div class="col">
@@ -66,26 +67,24 @@
                 </c:forEach>
             </div>
             <!-- TODO: 결제버튼 클릭 시 action 추가, Form 클래스 추가 필요 -->
-            <form:form action="${xxxx}/xxxx" method="post" enctype="" modelAttribute="">
+            <form:form action="/" method="post" id="orderRequest" modelAttribute="orderRequest">
                 <div class="mb-3">
-                    <label for="email" class="form-label">이메일</label>
-                    <input type="email" class="form-control mb-1" id="email">
+                    <label for="addressInput" class="form-label">주소</label>
+                    <input type="text" class="form-control mb-1" id="addressInput" name="address">
                 </div>
                 <div class="mb-3">
-                    <label for="address" class="form-label">주소</label>
-                    <input type="text" class="form-control mb-1" id="address">
-                </div>
-                <div class="mb-3">
-                    <label for="postcode" class="form-label">우편번호</label>
-                    <input type="text" class="form-control" id="postcode">
+                    <label for="postcodeInput" class="form-label">우편번호</label>
+                    <input type="text" class="form-control" id="postcodeInput" name="postcode">
                 </div>
                 <div>당일 오후 2시 이후의 주문은 다음날 배송을 시작합니다.</div>
                 <div class="row pt-2 pb-2 border-top">
                     <h5 class="col">총금액</h5>
                     <!-- TODO: totalPrice 가져오는 기능 필요 -->
-                    <h5 class="col text-end"><c:out value="${order.totalPrice}"/></h5>
+                    <h5 id="totalPrice" class="col text-end">0원</h5>
                 </div>
-                <button type="submit" name="action" class="btn btn-dark col-12">결제하기</button>
+                <input type="hidden" name="totalPrice" id="totalPriceInput" value="0">
+                <div id="itemsContainer"></div>
+                <button id="orderButton" type="submit" class="btn btn-dark col-12" disabled>결제하기</button>
             </form:form>
         </div>
     </div>
@@ -146,7 +145,119 @@
 
     addButton.disabled = (count >= stock);
     removeButton.disabled = (count <= 0);
+
+    updateTotalPrice();
   }
+
+  let totalCount = 0;
+  function updateTotalPrice(){
+    const items = document.querySelectorAll('li.list-group-item');
+    let total = 0;
+    let tempCount = 0;
+    items.forEach(item => {
+      const count = parseInt(item.dataset.count, 10);
+      const price = parseInt(item.dataset.price, 10);
+      total += count * price;
+      tempCount += count;
+    });
+
+    totalCount =tempCount;
+    console.log("total: "+ total);
+    console.log("totalCount: "+ totalCount);
+
+    const totalPriceEl = document.getElementById('totalPrice');
+    if (totalPriceEl) {
+      totalPriceEl.textContent = total.toLocaleString()+'원';
+    }
+
+    const totalPriceInput = document.getElementById('totalPriceInput');
+    if (totalPriceInput) {
+      totalPriceInput.value = total;  // 단위: 숫자
+    }
+
+    // 결제 버튼 활성화/비활성화 처리
+    updateOrderButtonStatus();
+  }
+  const addressInput = document.getElementById('addressInput');
+  const postcodeInput = document.getElementById('postcodeInput');
+  addressInput.addEventListener('input', updateOrderButtonStatus);
+  postcodeInput.addEventListener('input', updateOrderButtonStatus);
+
+
+  // 버튼 활성화/비활성화 체크
+  function updateOrderButtonStatus() {
+    const orderButton = document.getElementById('orderButton');
+    const address = addressInput.value.trim();
+    const postcode = postcodeInput.value.trim();
+
+    // 1. 상품 하나 이상 담겼는가
+    const hasItems = totalCount > 0;
+
+    // 2. 주소/우편번호 둘 다 입력되었는가
+    const addressFilled = address !== '';
+    const postcodeFilled = postcode !== '';
+
+    // 최종: 세 가지 조건 모두 만족해야 버튼 활성화
+    if (orderButton) {
+      orderButton.disabled = !(hasItems && addressFilled && postcodeFilled);
+    }
+  }
+
+
+  function prepareOrder(){
+
+    const itemsContainer = document.getElementById('itemsContainer');
+
+    const items = document.querySelectorAll('li.list-group-item');
+
+    items.forEach(item => {
+      const itemId = item.dataset.itemId;
+      const count = parseInt(item.dataset.count, 10);
+
+      if (count > 0) {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'orderItems['+itemId+']';
+        input.value = count;
+        itemsContainer.appendChild(input);
+      }
+    });
+  }
+  function addOrderItemsToForm() {
+    const itemsContainer = document.getElementById('itemsContainer');
+    itemsContainer.innerHTML = ''; // 기존 내용 비우기
+
+    const productItems = document.querySelectorAll('li.list-group-item');
+    let index = 0;
+
+    productItems.forEach(item => {
+      const itemId = item.dataset.itemId; // 상품 ID
+      const count = parseInt(item.dataset.count, 10); // 선택한 수량
+
+      if (count > 0) {
+        // 상품 ID hidden input 생성
+        const itemIdInput = document.createElement('input');
+        itemIdInput.type = 'hidden';
+        itemIdInput.name = 'orderItems['+index+'].itemId';  // ★ 이름 주의
+        itemIdInput.value = itemId;
+        itemsContainer.appendChild(itemIdInput);
+
+        // 상품 수량 hidden input 생성
+        const quantityInput = document.createElement('input');
+        quantityInput.type = 'hidden';
+        quantityInput.name = 'orderItems['+index+'].quantity';  // ★ 이름 주의
+        quantityInput.value = count;
+        itemsContainer.appendChild(quantityInput);
+
+        index++; // 다음 인덱스로 증가
+      }
+    });
+  }
+
+  // 폼 제출할 때 이 함수 호출
+  document.getElementById('orderRequest').addEventListener('submit', function(event) {
+    addOrderItemsToForm();
+  });
 </script>
 </body>
 </html>

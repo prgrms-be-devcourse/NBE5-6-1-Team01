@@ -3,6 +3,7 @@ package com.grepp.nbe561team01.app.model.order;
 import com.grepp.nbe561team01.app.model.order.dto.OrderDto;
 import com.grepp.nbe561team01.app.model.order.dto.admin.OrderInfoDto;
 import java.util.List;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -39,4 +40,12 @@ public interface OrderRepository {
     @Update("update orders set deleted_at = now(), order_status = 'CANCEL' where order_id = #{orderId}")
     boolean removeOrder(Integer orderId);
 
+    @Insert("""
+        INSERT INTO orders (email, address, postcode, total_price, created_at, order_status)
+        VALUES (#{email}, #{address}, #{postcode}, #{totalPrice}, NOW(), #{orderStatus})
+    """)
+    void insertOrder(OrderDto orderDto);
+
+    @Select("SELECT LAST_INSERT_ID()")
+    int selectLastInsertId();
 }

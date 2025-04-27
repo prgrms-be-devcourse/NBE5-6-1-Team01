@@ -1,5 +1,11 @@
 package com.grepp.nbe561team01.app.model.order;
 
+import com.grepp.nbe561team01.app.controller.web.Order.form.OrderItem;
+import com.grepp.nbe561team01.app.controller.web.Order.form.OrderRequest;
+import com.grepp.nbe561team01.app.model.item.ItemRepository;
+import com.grepp.nbe561team01.app.model.item.dto.ItemDto;
+import com.grepp.nbe561team01.app.model.order.code.OrderStatus;
+import com.grepp.nbe561team01.app.model.order.dto.OrderItemDto;
 import com.grepp.nbe561team01.app.model.order.dto.admin.OrderInfoDto;
 import com.grepp.nbe561team01.app.model.order.dto.OrderDto;
 import java.util.List;
@@ -14,6 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class OrderService {
 
     private final OrderRepository orderRepository;
+    private final OrderItemRepository orderItemRepository;
+    private final ItemRepository itemRepository;
 
     public List<OrderInfoDto> getAllOrders() {
         return orderRepository.selectAllOrders();
@@ -21,7 +29,7 @@ public class OrderService {
     public List<String> getItemNamesByOrderId(String orderId) {
         return orderRepository.selectOrderItemNames(orderId);
     }
-  
+
     @Transactional
     public List<OrderDto> findOrderByEmail(String email){
         List<OrderDto> orderList = orderRepository.selectAllByEmail(email);
@@ -33,5 +41,25 @@ public class OrderService {
         return orderRepository.removeOrder(orderId);
     }
 
+    @Transactional
+    public void createOrder(OrderDto orderDto, String email, List<OrderItem> orderItems){
+
+        orderDto.setEmail(email);
+        orderDto.setOrderStatus(OrderStatus.ORDER);
+        orderRepository.insertOrder(orderDto);
+
+        Integer orderId = orderRepository.selectLastInsertId();
+        for(OrderItem item : orderItems){
+            ItemDto itemDto = itemRepository.findById((long) Integer.parseInt(item.getItemId()));
+            OrderItemDto orderItemDto = new OrderItemDto();
+            orderItemDto.setOrderId(orderId);
+            orderItemDto.setItemId(itemDto.getItemId());
+            orderItemDto.setItemName(itemDto.getItemName());
+            orderItemDto.setItemPrice(itemDto.getItemPrice());
+            orderItemDto.setItemCount(item.getQuantity());
+
+            orderItemRepository.insertOrderItem(orderItemDto);
+        }
+    }
 
 }
