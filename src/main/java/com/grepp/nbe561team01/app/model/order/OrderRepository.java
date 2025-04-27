@@ -1,5 +1,6 @@
 package com.grepp.nbe561team01.app.model.order;
 
+import com.grepp.nbe561team01.app.model.order.code.OrderStatus;
 import com.grepp.nbe561team01.app.model.order.dto.OrderDto;
 import com.grepp.nbe561team01.app.model.order.dto.OrderItemDto;
 import com.grepp.nbe561team01.app.model.order.dto.admin.OrderInfoDto;
@@ -19,16 +20,7 @@ public interface OrderRepository {
     @Select("select ITEM_NAME from ORDERITEMS where ORDER_ID=#{orderId}")
     List<String> selectOrderItemNames(Integer orderId);
 
-    @Select("select * from orders where email = #{email}")
-    List<OrderDto> selectAllByEmail(String email);
-
-    List<OrderDto> selectOrderByEmail(@Param("email") String email);
-
-    @Select("select * from orders where email = #{email} and order_status = 'DELIVER'")
-    List<OrderDto> selectOrderDeliverByEmail(String email);
-
-    @Select("select * from orders where email = #{email} and order_status = 'CANCEL'")
-    List<OrderDto> selectOrderCancelByEmail(String email);
+    List<OrderDto> selectOrderByOrderStatus(@Param("email") String email, @Param("orderStatus") String orderStatus);
 
     @Select("select * from orderitems where order_id = #{orderId}")
     List<OrderItemDto> selectItemByOrder(Integer orderId);
@@ -40,9 +32,6 @@ public interface OrderRepository {
     List<OrderItemDto> selectOrderItemById(Integer orderId);
 
     // SoftDelete 적용
-    @Update("update orders set deleted_at = now(), order_status = 'CANCEL' where order_id = #{orderId}")
-    boolean removeOrder(Integer orderId);
-
     @Update("UPDATE orders SET deleted_at = NOW(), order_status = 'CANCEL' WHERE email = #{email} AND postcode = #{postcode} AND order_status = 'ORDER'")
     boolean removeOrdersByPostcode(String email, String postcode);
 
