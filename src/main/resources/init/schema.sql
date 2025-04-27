@@ -38,7 +38,7 @@ CREATE TABLE `ORDERS`
     `ORDER_ID`     int          AUTO_INCREMENT PRIMARY KEY        COMMENT '주문번호',
     `EMAIL`        VARCHAR(30)  NOT NULL                          COMMENT '이메일',
     `ADDRESS`      VARCHAR(50)  NOT NULL                          COMMENT '주소',
-    `POSTCODE`     int          NOT NULL                          COMMENT '우편번호',
+    `POSTCODE`     VARCHAR(15)  NOT NULL                   COMMENT '우편번호',
     `TOTAL_PRICE`  int                                            COMMENT '총가격',
     `CREATED_AT`   timestamp    DEFAULT now()                     COMMENT '생성일자',
     `ORDER_STATUS` VARCHAR(10)                                    COMMENT 'ORDER/CANCEL/DELIVERY'

@@ -11,7 +11,7 @@ public class OrderRequest {
     @NotBlank
     private String address;
     @NotBlank
-    private int postcode;
+    private String postcode;
     private List<OrderItem> orderItems;
     private int totalPrice;
 

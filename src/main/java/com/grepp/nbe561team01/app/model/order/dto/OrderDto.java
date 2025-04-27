@@ -14,7 +14,7 @@ public class OrderDto {
         private Integer orderId;
         private String email;
         private String address;
-        private Integer postcode;
+        private String postcode;
         private Integer totalPrice;
         private LocalDateTime createdAt;
         private OrderStatus orderStatus;
