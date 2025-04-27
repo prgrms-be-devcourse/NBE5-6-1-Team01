@@ -87,6 +87,14 @@
             </c:forEach>
         </ul>
     </div>
+    <form action="/user/remove" method="post" onsubmit="return confirm('회원 탈퇴를 하시겠습니까?');">
+        <input type="hidden" name="email" value="${user.email}" />
+        <button type="submit" class="btn btn-outline-dark">회원 탈퇴</button>
+    </form>
 </div>
 </body>
 </html>
+
+<script>
+
+</script>

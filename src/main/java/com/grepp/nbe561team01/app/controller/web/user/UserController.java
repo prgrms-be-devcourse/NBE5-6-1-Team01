@@ -55,12 +55,10 @@ public class UserController {
       return "redirect:/user/signin";
     }
 
-
-    @DeleteMapping("remove")
-    public String removeUser(@RequestParam String email) {
-        boolean result = userService.removeUser(email);
-
-        return "redirect:/";
+    @PostMapping("remove")
+    public String removeUser(@RequestParam("email") String email) {
+        userService.removeUser(email);
+        return "redirect:/user/signin";
     }
 
     @GetMapping("mypage")
