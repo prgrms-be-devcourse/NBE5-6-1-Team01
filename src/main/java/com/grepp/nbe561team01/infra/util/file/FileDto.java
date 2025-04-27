@@ -1,5 +1,9 @@
 package com.grepp.nbe561team01.infra.util.file;
 
-public class FileDto {
+public record FileDto(
+    String originFileName,
+    String renameFileName,
+    String savePath
+) {
 
 }
