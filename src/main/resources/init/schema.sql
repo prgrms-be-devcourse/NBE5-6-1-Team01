@@ -14,6 +14,8 @@ CREATE TABLE `ITEM_IMG`
 (
     `ITEM_IMG_ID`       int         NOT NULL auto_increment PRIMARY KEY  COMMENT '파일번호',
     `ITEM_ID`           int         NOT NULL                             COMMENT '파일번호',
+    `ORIGIN_FILE_NAME` VARCHAR(255)  NOT NULL                            COMMENT '원본파일명',
+    `RENAME_FILE_NAME` VARCHAR(255)  NOT NULL                            COMMENT '저장파일명',
     `SAVE_PATH`        VARCHAR(255) NOT NULL                             COMMENT '저장경로',
     `CREATED_AT`       timestamp    NULL       DEFAULT now()             COMMENT '파일등록일자'
 );
