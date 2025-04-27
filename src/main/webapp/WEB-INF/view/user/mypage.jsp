@@ -39,7 +39,7 @@
                     <h5>배송 준비</h5>
                 </c:if>
                 <c:if test="${key == 'DELIVER'}">
-                    <h5 style="margin-top: 30px">배송 완료</h5>
+                    <h5 style="margin-top: 30px">배송중</h5>
                 </c:if>
                 <c:if test="${key == 'CANCEL'}">
                     <h5 style="margin-top: 30px">배송 취소</h5>
@@ -54,7 +54,7 @@
                                 <c:if test="${order.orderStatus eq 'ORDER'}">
                                     <div class="text-end mt-3 mb-3">
                                         <form action="/user/mypage" method="post" onsubmit="return confirm('정말로 주문을 취소하시겠습니까?');">
-                                            <input type="hidden" name="orderid" value="${order.orderId}">
+                                            <input type="hidden" name="postcode" value="${order.postcode}">
                                             <button type="submit" class="btn btn-outline-dark">취소</button>
                                         </form>
                                     </div>

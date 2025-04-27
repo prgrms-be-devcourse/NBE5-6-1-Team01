@@ -41,7 +41,8 @@ CREATE TABLE `ORDERS`
     `POSTCODE`     VARCHAR(15)  NOT NULL                   COMMENT '우편번호',
     `TOTAL_PRICE`  int                                            COMMENT '총가격',
     `CREATED_AT`   timestamp    DEFAULT now()                     COMMENT '생성일자',
-    `ORDER_STATUS` VARCHAR(10)                                    COMMENT 'ORDER/CANCEL/DELIVERY'
+    `ORDER_STATUS` VARCHAR(10)                                    COMMENT 'ORDER/CANCEL/DELIVERY',
+    `DELETED_AT`   TIMESTAMP    NULL                              COMMENT '주문삭제일자'
 );
 
 DROP TABLE IF EXISTS `ORDERITEMS`;

@@ -8,12 +8,12 @@
     UPDATE orders
     SET order_status = 'DELIVER'
     WHERE email = #{email}
-    AND order_status = 'ORDER'
-    AND NOW() >=
+      AND order_status = 'ORDER'
+      AND NOW() >=
     CASE
     WHEN TIME(created_at) &lt; '14:00:00'
-    THEN DATE_ADD(DATE(created_at), INTERVAL 14 HOUR)
-    ELSE DATE_ADD(DATE_ADD(DATE(created_at), INTERVAL 1 DAY), INTERVAL 14 HOUR)
+      THEN DATE_ADD(DATE(created_at), INTERVAL 14 HOUR)
+      ELSE DATE_ADD(DATE_ADD(DATE(created_at), INTERVAL 1 DAY), INTERVAL 14 HOUR)
     END
   </update>
 

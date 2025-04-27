@@ -84,9 +84,12 @@ public class UserController {
     }
 
     @PostMapping("mypage")
-    public String mypage(@RequestParam("orderid") Integer orderId){
+    public String mypage(Authentication authentication, @RequestParam("postcode") String postcode){
 
-        orderService.removeOrder(orderId);
+        String email = authentication.getName();
+        UserDto user = userService.findByEmail(email)
+                .orElseThrow(() -> new CommonException(ResponseCode.UNAUTHORIZED));
+        orderService.removeOrder(user.getEmail(), postcode);
 
         return "redirect:/user/mypage";
     }

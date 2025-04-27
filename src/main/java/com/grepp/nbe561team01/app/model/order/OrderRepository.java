@@ -43,6 +43,9 @@ public interface OrderRepository {
     @Update("update orders set deleted_at = now(), order_status = 'CANCEL' where order_id = #{orderId}")
     boolean removeOrder(Integer orderId);
 
+    @Update("UPDATE orders SET deleted_at = NOW(), order_status = 'CANCEL' WHERE email = #{email} AND postcode = #{postcode} AND order_status = 'ORDER'")
+    boolean removeOrdersByPostcode(String email, String postcode);
+
     // 관리자 유저 주문처리 시간 관리
     @Update("update orders set order_status = 'DELIVER' where order_id = #{orderId}")
     int updateStatusToDeliver(Integer orderId);

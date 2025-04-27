@@ -65,8 +65,8 @@ public class OrderService {
     }
 
     @Transactional
-    public boolean removeOrder(Integer orderId){
-        return orderRepository.removeOrder(orderId);
+    public boolean removeOrder(String email, String postcode){
+        return orderRepository.removeOrdersByPostcode(email, postcode);
     }
 
     @Transactional
