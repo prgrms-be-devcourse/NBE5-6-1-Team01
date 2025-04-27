@@ -4,6 +4,7 @@ import com.grepp.nbe561team01.app.controller.web.user.form.SignupRequest;
 import com.grepp.nbe561team01.app.model.order.OrderService;
 import com.grepp.nbe561team01.app.model.order.code.OrderStatus;
 import com.grepp.nbe561team01.app.model.order.dto.OrderDto;
+import com.grepp.nbe561team01.app.model.order.dto.OrderItemDto;
 import com.grepp.nbe561team01.app.model.order.dto.admin.OrderInfoDto;
 import com.grepp.nbe561team01.app.model.user.UserService;
 import com.grepp.nbe561team01.app.model.user.code.Role;
@@ -114,9 +115,12 @@ public class AdminController {
     }
 
     @PostMapping("addressDetail")
-    public String addressDetail(Integer orderId, Model model){
-        OrderDto order = orderService.getOrderById(orderId);
-        model.addAttribute("order", order);
+    public String addressDetail(@RequestParam("orderid") Integer orderId, Model model){
+        OrderDto order = orderService.findById(orderId);
+        List<OrderItemDto> items = orderService.findItemById(orderId);
+
+        model.addAttribute("orderInfo", order);
+        model.addAttribute("items", items);
         return "admin/addressDetail";
     }
 

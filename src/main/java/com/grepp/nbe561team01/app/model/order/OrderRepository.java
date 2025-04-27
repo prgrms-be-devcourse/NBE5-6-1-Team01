@@ -1,6 +1,7 @@
 package com.grepp.nbe561team01.app.model.order;
 
 import com.grepp.nbe561team01.app.model.order.dto.OrderDto;
+import com.grepp.nbe561team01.app.model.order.dto.OrderItemDto;
 import com.grepp.nbe561team01.app.model.order.dto.admin.OrderInfoDto;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
@@ -21,6 +22,9 @@ public interface OrderRepository {
 
     @Select("select * from orders where order_id = #{orderId}")
     OrderDto selectAllByOrderId(Integer orderId);
+
+    @Select("select * from orderitems where order_id = #{orderId}")
+    List<OrderItemDto> selectOrderItemById(Integer orderId);
 
     // SoftDelete 적용
     @Update("update orders set deleted_at = now(), order_status = 'CANCEL' where order_id = #{orderId}")

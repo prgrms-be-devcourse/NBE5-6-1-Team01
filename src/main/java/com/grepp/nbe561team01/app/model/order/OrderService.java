@@ -1,5 +1,6 @@
 package com.grepp.nbe561team01.app.model.order;
 
+import com.grepp.nbe561team01.app.model.order.dto.OrderItemDto;
 import com.grepp.nbe561team01.app.model.order.dto.admin.OrderInfoDto;
 import com.grepp.nbe561team01.app.model.order.dto.OrderDto;
 import java.util.List;
@@ -21,10 +22,6 @@ public class OrderService {
     public List<String> getItemNamesByOrderId(Integer orderId) {
         return orderRepository.selectOrderItemNames(orderId);
     }
-
-    public OrderDto getOrderById(Integer orderId) {
-        return orderRepository.selectAllByOrderId(orderId);
-    }
   
     @Transactional
     public List<OrderDto> findOrderByEmail(String email){
@@ -38,4 +35,11 @@ public class OrderService {
     }
 
 
+    public OrderDto findById(Integer orderId) {
+        return orderRepository.selectAllByOrderId(orderId);
+    }
+
+    public List<OrderItemDto> findItemById(Integer orderId) {
+        return orderRepository.selectOrderItemById(orderId);
+    }
 }
