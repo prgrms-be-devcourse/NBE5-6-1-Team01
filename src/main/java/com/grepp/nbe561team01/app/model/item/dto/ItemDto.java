@@ -15,4 +15,5 @@ public class ItemDto {
         private Integer stock;
         private ItemImg img;
         private Integer itemImgId;
+        private String savePath;
 }
