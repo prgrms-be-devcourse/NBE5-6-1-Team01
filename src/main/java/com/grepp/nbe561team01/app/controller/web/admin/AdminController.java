@@ -70,8 +70,7 @@ public class AdminController {
         List<OrderDto> orders = orderService.getAllOrders();
 
         // email-address-OrderInfo Map
-        Map<String, Map<String, OrderInfoDto>> emailAddressOrderMap = new LinkedHashMap<>();
-
+        Map<String, Map<String, List<OrderInfoDto>>> emailAddressOrderMap = new LinkedHashMap<>();
         for (OrderDto order : orders) {
             // OrderInfoDto 생성
             List<String> itemNames = orderService.getItemNamesByOrderId(order.getOrderId());
@@ -83,11 +82,11 @@ public class AdminController {
                 order.getTotalPrice(),
                 itemNames
             );
-
             // 이메일을 키로 한 서브 맵 생성 (이메일별로 주문 정보 관리)
             emailAddressOrderMap
-                .computeIfAbsent(order.getEmail(), k -> new LinkedHashMap<>())
-                .put(order.getAddress(), orderInfo);  // 이메일에 해당하는 맵에 orderId와 함께 저장
+                .computeIfAbsent(order.getEmail(), k -> new LinkedHashMap<>())  // 이메일별 서브맵 생성
+                .computeIfAbsent(order.getAddress(), k -> new ArrayList<>())  // 주소별 리스트 생성
+                .add(orderInfo);  // 리스트에 OrderInfoDto 추가
         }
 
         model.addAttribute("admin", admin);
