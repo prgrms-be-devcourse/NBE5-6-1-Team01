@@ -6,6 +6,8 @@ import com.grepp.nbe561team01.app.model.order.dto.OrderDto;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import com.grepp.nbe561team01.app.model.order.dto.OrderDto;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,7 +23,7 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
-    public List<OrderInfoDto> getAllOrders() {
+    public List<OrderDto> getAllOrders() {
         return orderRepository.selectAllOrders();
     }
     public List<String> getItemNamesByOrderId(Integer orderId) {
@@ -89,4 +91,23 @@ public class OrderService {
     public void updateOrderStatusByUser(String email){
         orderRepository.updateStatusByUserToDeliver(email);
     }
+
+    public OrderDto findById(Integer orderId) {
+        return orderRepository.selectAllByOrderId(orderId);
+    }
+
+    public List<OrderItemDto> findItemById(Integer orderId) {
+        return orderRepository.selectOrderItemById(orderId);
+    }
+
+    public List<Integer> getTotalOrderStatuses() {
+        List<Integer> orderStatuses = new ArrayList<>();
+        orderStatuses.add(orderRepository.countOrders());
+        orderStatuses.add(orderRepository.countCancelledStatus());
+        orderStatuses.add(orderRepository.countDeliverOrderStatus());
+
+        return orderStatuses;
+    }
+
+
 }

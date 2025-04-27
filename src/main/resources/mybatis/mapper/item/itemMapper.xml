@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.grepp.nbe561team01.app.model.item.ItemRepository">
+
+  <resultMap id="itemMap" type="com.grepp.nbe561team01.app.model.item.dto.ItemDto">
+    <id property="itemId" column="item_id"/>
+    <collection property="img" column="item_id" ofType="ItemImg" select="selectImg" />
+  </resultMap>
+
+  <select id="selectAll" resultMap="itemMap">
+    select * from items
+  </select>
+
+  <select id="selectImg" parameterType="int" resultType="com.grepp.nbe561team01.app.model.item.dto.ItemImg">
+    select * from item_img where item_id = #{itemId}
+  </select>
+
+  <select id="findById" resultMap="itemMap">
+    select * from items where item_id = #{itemId}
+  </select>
+
+</mapper>
