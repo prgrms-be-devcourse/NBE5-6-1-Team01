@@ -37,6 +37,14 @@ public interface OrderRepository {
     @Select("select * from orders where email = #{email}")
     List<OrderDto> selectAllByEmail(String email);
 
+    List<OrderDto> selectOrderByEmail(@Param("email") String email);
+
+    @Select("select * from orders where email = #{email} and order_status = 'DELIVER'")
+    List<OrderDto> selectOrderDeliverByEmail(String email);
+
+    @Select("select * from orders where email = #{email} and order_status = 'CANCEL'")
+    List<OrderDto> selectOrderCancelByEmail(String email);
+
     @Select("select * from orderitems where order_id = #{orderId}")
     List<OrderItemDto> selectItemByOrder(Integer orderId);
 

@@ -27,16 +27,21 @@ public class OrderService {
     public List<String> getItemNamesByOrderId(Integer orderId) {
         return orderRepository.selectOrderItemNames(orderId);
     }
-  
+
     @Transactional
-    public List<OrderDto> findOrderByEmail(String email){
-        List<OrderDto> orderList = orderRepository.selectAllByEmail(email);
+    public Map<String, List<OrderDto>> findOrderAllByEmail(String email){
+        Map<String, List<OrderDto>> orderList = new HashMap<>();
+        orderList.put("ORDER", orderRepository.selectOrderByEmail(email));
+        orderList.put("DELIVER", orderRepository.selectOrderDeliverByEmail(email));
+        orderList.put("CANCEL", orderRepository.selectOrderCancelByEmail(email));
+
         return orderList;
     }
 
     @Transactional
-    public Map<Integer, List<OrderItemDto>> findOrderItemByOrder(List<OrderDto> orderList) {
-        List<Integer> orderIds = orderList.stream()
+    public Map<Integer, List<OrderItemDto>> findOrderItemByOrder(Map<String, List<OrderDto>> orderList) {
+        List<Integer> orderIds = orderList.values().stream()
+                .flatMap(List::stream)
                 .map(OrderDto::getOrderId)
                 .collect(Collectors.toList());
 

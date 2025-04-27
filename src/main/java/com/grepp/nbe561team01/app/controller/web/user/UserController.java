@@ -76,7 +76,7 @@ public class UserController {
 
         orderService.updateOrderStatusByUser(user.getEmail());
 
-        List<OrderDto> orderList = orderService.findOrderByEmail(user.getEmail());
+        Map<String, List<OrderDto>> orderList = orderService.findOrderAllByEmail(user.getEmail());
         model.addAttribute("orderList", orderList);
 
         Map<Integer, List<OrderItemDto>> orderItemList = orderService.findOrderItemByOrder(orderList);
