@@ -67,10 +67,8 @@ public class UserService {
     }
 
     @Transactional
-    public boolean cancelOrder(int orderId, String status) {
-
+    public void cancelOrder(int orderId, String status) {
         userRepository.cancelOrder(orderId, status);
-        return false;
     }
 }
 

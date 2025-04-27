@@ -2,7 +2,8 @@ package com.grepp.nbe561team01.app.controller.web.admin;
 
 import com.grepp.nbe561team01.app.controller.web.user.form.SignupRequest;
 import com.grepp.nbe561team01.app.model.order.OrderService;
-import com.grepp.nbe561team01.app.model.order.code.OrderStatus;
+import com.grepp.nbe561team01.app.model.order.dto.OrderDto;
+import com.grepp.nbe561team01.app.model.order.dto.OrderItemDto;
 import com.grepp.nbe561team01.app.model.order.dto.admin.OrderInfoDto;
 import com.grepp.nbe561team01.app.model.user.UserService;
 import com.grepp.nbe561team01.app.model.user.code.Role;
@@ -10,7 +11,8 @@ import com.grepp.nbe561team01.app.model.user.dto.UserDto;
 import com.grepp.nbe561team01.infra.error.exceptions.CommonException;
 import com.grepp.nbe561team01.infra.response.ResponseCode;
 import jakarta.validation.Valid;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -63,18 +65,32 @@ public class AdminController {
         UserDto admin = adminService.findByEmail(email)
             .orElseThrow(() -> new CommonException(ResponseCode.UNAUTHORIZED));
 
-        List<OrderInfoDto> orders = orderService.getAllOrders();
+        List<OrderDto> orders = orderService.getAllOrders();
+        List<Integer> statuses = orderService.getTotalOrderStatuses();
 
-        Map<String, List<String>> orderItemNamesMap = new HashMap<>();
-        for (OrderInfoDto order : orders) {
+        // email-address-OrderInfo Map
+        Map<String, Map<String, List<OrderInfoDto>>> emailAddressOrderMap = new LinkedHashMap<>();
+        for (OrderDto order : orders) {
+            // OrderInfoDto 생성
             List<String> itemNames = orderService.getItemNamesByOrderId(order.getOrderId());
-            orderItemNamesMap.put(order.getOrderId(), itemNames);
+            OrderInfoDto orderInfo = new OrderInfoDto(
+                order.getOrderId(),
+                order.getCreatedAt(),
+                order.getPostcode(),
+                order.getOrderStatus(),
+                order.getTotalPrice(),
+                itemNames
+            );
+            // 이메일을 키로 한 서브 맵 생성 (이메일별로 주문 정보 관리)
+            emailAddressOrderMap
+                .computeIfAbsent(order.getEmail(), k -> new LinkedHashMap<>())  // 이메일별 서브맵 생성
+                .computeIfAbsent(order.getAddress(), k -> new ArrayList<>())  // 주소별 리스트 생성
+                .add(orderInfo);  // 리스트에 OrderInfoDto 추가
         }
 
-        model.addAttribute("orderItemNamesMap", orderItemNamesMap);
         model.addAttribute("admin", admin);
-        model.addAttribute("orders", orders);
-        model.addAttribute("itemMap", orderItemNamesMap);
+        model.addAttribute("orderMap", emailAddressOrderMap);
+        model.addAttribute("statuses", statuses);
 
         return "admin/mypage";
     }
@@ -89,6 +105,22 @@ public class AdminController {
     @GetMapping("itemManagement")
     public String itemManagement(SignupRequest form){
         return "admin/item-management";
+    }
+
+    @GetMapping("addressDetail")
+    public String addressDetail(){
+
+        return "admin/addressDetail";
+    }
+
+    @PostMapping("addressDetail")
+    public String addressDetail(@RequestParam("orderid") Integer orderId, Model model){
+        OrderDto order = orderService.findById(orderId);
+        List<OrderItemDto> items = orderService.findItemById(orderId);
+
+        model.addAttribute("orderInfo", order);
+        model.addAttribute("items", items);
+        return "admin/addressDetail";
     }
 
 }
