@@ -4,7 +4,7 @@ import com.grepp.nbe561team01.app.controller.web.user.form.SignupRequest;
 import com.grepp.nbe561team01.app.model.order.OrderService;
 import com.grepp.nbe561team01.app.model.order.dto.OrderDto;
 import com.grepp.nbe561team01.app.model.order.dto.OrderItemDto;
-import com.grepp.nbe561team01.app.model.order.dto.OrderInfoDto;
+import com.grepp.nbe561team01.app.model.order.dto.admin.OrderInfoDto;
 import com.grepp.nbe561team01.app.model.user.UserService;
 import com.grepp.nbe561team01.app.model.user.code.Role;
 import com.grepp.nbe561team01.app.model.user.dto.UserDto;
