@@ -11,7 +11,12 @@
     <%@include file="/WEB-INF/view/include/static.jsp" %>
 </head>
 <body class="container-fluid">
-<%@include file="/WEB-INF/view/include/admin-header.jsp" %>
+<header>
+        <div class="header">
+            <a href="/admin/mypage">Admin Page</a>
+            <a href="/user/logout">Logout</a>
+        </div>
+</header>
 <div class="row justify-content-center m-4">
     <h1 class="text-center">Grids & Circle</h1>
 </div>
