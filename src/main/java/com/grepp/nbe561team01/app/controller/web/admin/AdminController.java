@@ -1,5 +1,6 @@
 package com.grepp.nbe561team01.app.controller.web.admin;
 
+import com.grepp.nbe561team01.app.controller.web.admin.item.form.ItemRegistForm;
 import com.grepp.nbe561team01.app.controller.web.user.form.SignupRequest;
 import com.grepp.nbe561team01.app.model.order.OrderService;
 import com.grepp.nbe561team01.app.model.order.dto.OrderDto;
@@ -103,7 +104,8 @@ public class AdminController {
 
 
     @GetMapping("itemManagement")
-    public String itemManagement(SignupRequest form){
+    public String itemManagement(ItemRegistForm form, Model model){
+        model.addAttribute("itemRegistForm", form);
         return "admin/item-management";
     }
 
