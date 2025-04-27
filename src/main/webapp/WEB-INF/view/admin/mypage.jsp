@@ -29,14 +29,12 @@
                     <c:forEach var="orderEntry" items="${emailEntry.value}">
                         <h6 style="margin-top: 7px">주소: ${orderEntry.key}(${orderEntry.value.postcode})</h6>
                         <li class="list-group-item mt-1">
-                            <div class="row-button admin-order-info">
+                            <div class="row-button">
                                 <h5>
-                                    <form action="/admin/addressDetail" method="post">
+                                        ${orderEntry.value.createdAt} (order-id: ${orderEntry.value.orderId})
+                                    <form action="/admin/addressDetail" method="post" onsubmit="return openPopupAndSubmit(this);" style="display: inline;">
                                         <input type="hidden" name="orderid" value="${orderEntry.value.orderId}">
-                                        <a type="submit" href="/admin/addressDetail?address=${orderEntry.key}"
-                                           onclick="window.open(this.href, '_blank', 'width=800,height=600,left=850,top=400'); return false;">
-                                            ${orderEntry.value.createdAt} (order-id: ${orderEntry.value.orderId})
-                                        </a>
+                                        <input type="submit" value="상세" class="btn btn-outline-dark" style="display: inline; margin-left: 10px; padding:2px 4px 2px 4px;">
                                     </form>
                                 </h5>
                                 <c:if test="${orderEntry.value.orderStatus eq 'ORDER'}">
@@ -68,5 +66,12 @@
         </c:if>
     </div>
 </div>
+<script>
+  function openPopupAndSubmit(form) {
+    const popup = window.open('', 'popupWindow', 'width=800,height=600,left=850,top=400');
+    form.target = 'popupWindow';
+    return true; // form submit 진행
+  }
+</script>
 </body>
 </html>
