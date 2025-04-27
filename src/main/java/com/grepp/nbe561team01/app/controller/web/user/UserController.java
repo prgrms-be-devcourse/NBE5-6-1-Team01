@@ -2,7 +2,7 @@ package com.grepp.nbe561team01.app.controller.web.user;
 
 import com.grepp.nbe561team01.app.controller.web.user.form.SigninRequest;
 import com.grepp.nbe561team01.app.controller.web.user.form.SignupRequest;
-import com.grepp.nbe561team01.app.controller.web.user.form.UpdateForm;
+import com.grepp.nbe561team01.app.controller.web.user.form.UpdateRequest;
 import com.grepp.nbe561team01.app.model.auth.dto.Principal;
 import com.grepp.nbe561team01.app.model.order.OrderService;
 import com.grepp.nbe561team01.app.model.order.dto.OrderDto;
@@ -26,8 +26,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
@@ -92,14 +90,14 @@ public class UserController {
 
 
     @GetMapping("update")
-    public String update(UpdateForm form){
+    public String update(UpdateRequest form){
         return "user/update";
     }
 
     @PostMapping("update")
     public String update(
         @Valid
-        UpdateForm form,
+        UpdateRequest form,
         BindingResult bindingResult,
         Authentication authentication,
         Model model

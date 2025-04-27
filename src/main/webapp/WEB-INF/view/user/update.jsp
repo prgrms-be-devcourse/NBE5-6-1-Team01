@@ -17,7 +17,7 @@
     <div class="alert alert-danger">${errorMessage}</div>
   </c:if>
   <div class="card security">
-    <form:form modelAttribute="updateForm" action="/user/update" method="post" id="updateForm">
+    <form:form modelAttribute="updateRequest" action="/user/update" method="post" id="updateRequest">
       <div class="mb-4">
         <label for="password" class="form-label">비밀번호</label>
         <form:password path="password" class="form-control"
