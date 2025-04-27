@@ -4,6 +4,7 @@ import com.grepp.nbe561team01.app.model.order.dto.OrderDto;
 import com.grepp.nbe561team01.app.model.order.dto.OrderItemDto;
 import com.grepp.nbe561team01.app.model.order.dto.admin.OrderInfoDto;
 import java.util.List;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -31,7 +32,7 @@ public interface OrderRepository {
 
     @Select("select * from orderitems where order_id = #{orderId}")
     List<OrderItemDto> selectItemByOrder(Integer orderId);
-  
+
     @Select("select * from orders where order_id = #{orderId}")
     OrderDto selectAllByOrderId(Integer orderId);
 
@@ -57,5 +58,13 @@ public interface OrderRepository {
 
     @Select("select count(order_id) from orders where order_status = 'DELIVER'")
     int countDeliverOrderStatus();
+    @Insert("""
+        INSERT INTO orders (email, address, postcode, total_price, created_at, order_status)
+        VALUES (#{email}, #{address}, #{postcode}, #{totalPrice}, NOW(), #{orderStatus})
+    """)
+    void insertOrder(OrderDto orderDto);
+
+    @Select("SELECT LAST_INSERT_ID()")
+    int selectLastInsertId();
 
 }
