@@ -42,9 +42,10 @@ public class OrderService {
     @Transactional
     public Map<String, List<OrderDto>> findOrderAllByEmail(String email){
         Map<String, List<OrderDto>> orderList = new HashMap<>();
-        orderList.put("ORDER", orderRepository.selectOrderByEmail(email));
-        orderList.put("DELIVER", orderRepository.selectOrderDeliverByEmail(email));
-        orderList.put("CANCEL", orderRepository.selectOrderCancelByEmail(email));
+
+        orderList.put("ORDER", orderRepository.selectOrderByOrderStatus(email, "ORDER"));
+        orderList.put("DELIVER", orderRepository.selectOrderByOrderStatus(email, "DELIVER"));
+        orderList.put("CANCEL", orderRepository.selectOrderByOrderStatus(email, "CANCEL"));
 
         return orderList;
     }
