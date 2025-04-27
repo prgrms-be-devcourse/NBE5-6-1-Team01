@@ -1,4 +1,4 @@
-package com.grepp.nbe561team01.app.model.order.dto.admin;
+package com.grepp.nbe561team01.app.model.order.dto;
 
 import com.grepp.nbe561team01.app.model.order.code.OrderStatus;
 import java.time.LocalDateTime;

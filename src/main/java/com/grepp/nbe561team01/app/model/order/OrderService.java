@@ -1,7 +1,6 @@
 package com.grepp.nbe561team01.app.model.order;
 
 import com.grepp.nbe561team01.app.model.order.dto.OrderItemDto;
-import com.grepp.nbe561team01.app.model.order.dto.admin.OrderInfoDto;
 import com.grepp.nbe561team01.app.model.order.dto.OrderDto;
 import java.util.ArrayList;
 import java.util.List;
