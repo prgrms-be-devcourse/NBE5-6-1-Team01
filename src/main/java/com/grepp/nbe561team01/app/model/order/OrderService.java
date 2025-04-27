@@ -55,7 +55,7 @@ public class OrderService {
             ItemDto itemDto = itemRepository.findById((long) Integer.parseInt(item.getItemId()));
             OrderItemDto orderItemDto = new OrderItemDto();
             orderItemDto.setOrderId(orderId);
-            orderItemDto.setItemId(itemDto.getItemId());
+            orderItemDto.setItemId(Math.toIntExact(itemDto.getItemId()));
             orderItemDto.setItemName(itemDto.getItemName());
             orderItemDto.setItemPrice(itemDto.getItemPrice());
             orderItemDto.setItemCount(item.getQuantity());
