@@ -55,6 +55,10 @@ public class OrderService {
                 .map(OrderDto::getOrderId)
                 .collect(Collectors.toList());
 
+        if (orderIds.isEmpty()) {
+            return new HashMap<>();
+        }
+
         Map<Integer, List<OrderItemDto>> itemListByOrderId = new HashMap<>();
         for(Integer id:orderIds){
             itemListByOrderId.put(id, orderRepository.selectItemByOrder(id));

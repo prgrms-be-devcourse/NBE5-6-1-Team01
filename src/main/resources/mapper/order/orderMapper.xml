@@ -19,7 +19,7 @@
 
   <select id="selectOrderByOrderStatus" resultType="com.grepp.nbe561team01.app.model.order.dto.OrderDto">
     SELECT
-      MIN(o.order_id) AS order_id,
+      o.order_id,
       o.email,
       o.address,
       o.postcode,
@@ -31,8 +31,8 @@
     WHERE u.user_id = #{userId}
       AND o.order_status = #{orderStatus}
       AND u.deleted_at IS NULL
-    GROUP BY o.email, o.address, o.postcode
-    ORDER BY order_id desc;
+    GROUP BY o.order_id, o.email, o.address, o.postcode
+    ORDER BY o.postcode asc, o.created_at desc;
   </select>
 
 </mapper>
