@@ -90,7 +90,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         // csrf 설정 (delete 요청 등에서 필요에 따라 활성화)
-         http.csrf(csrf -> csrf.disable());
+//         http.csrf(csrf -> csrf.disable());
 
          http
              .headers(headers -> headers.cacheControl(
@@ -105,7 +105,8 @@ public class SecurityConfig {
                 .requestMatchers(POST, "/user/remove").hasAnyRole("ADMIN", "USER")
                 .requestMatchers(GET, "/admin/signup").permitAll()
                 .requestMatchers(POST, "/admin/signup").permitAll()
-                .requestMatchers(GET, "admin/mypage", "/admin/itemManagement").hasRole("ADMIN")
+                .requestMatchers(GET, "/admin/**").hasRole("ADMIN")
+                .requestMatchers(POST, "/admin/**").hasRole("ADMIN")
                 .requestMatchers(GET, "/api/**").permitAll()
                 .requestMatchers(GET, "/", "/user/logout", "/user/mypage").hasRole( "USER")
                 .requestMatchers(PUT, "/**").permitAll()  // PUT

@@ -9,12 +9,29 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <%@include file="/WEB-INF/view/include/static.jsp" %>
+    <style>
+      .header button {
+        text-decoration: none;
+        color: black;
+        font-weight: bold;
+      }
+      .logout-link {
+        background: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+        cursor: pointer; /* 마우스 포인터를 손가락으로 */
+        font: inherit; /* 폰트 스타일 상속 */
+      }
+    </style>
 </head>
 <body class="container-fluid">
 <header>
         <div class="header">
             <a href="/admin/mypage">Admin Page</a>
-            <a href="/user/logout">Logout</a>
+            <form:form action="/user/logout" method="POST">
+                <button type="submit" class="logout-link">Logout</button>
+            </form:form>
         </div>
 </header>
 <div class="row justify-content-center m-4">
@@ -37,6 +54,7 @@
                 <form:form action="${context}/admin/item/add" id="itemForm"
                            modelAttribute="itemRegistForm" enctype="multipart/form-data"
                            method="POST">
+                    <input type="hidden" name="_csrf" value="${_csrf.token}"/>
                     <form:input type="hidden" path="itemId" id="itemId"/><!-- 수정용 itemId -->
                     <form:input type="hidden" id="itemImgId"  path="itemImgId"/>
                     <div class="mb-3">
@@ -60,8 +78,7 @@
                                     id="itemPrice" placeholder="상품가격 입력"/>
                     </div>
                     <hr>
-                    <button type="submit" class="btn btn-dark col-12 mb-2" id="submitBtn">등록
-                    </button>
+                        <button type="submit" class="btn btn-dark col-12 mb-2" id="submitBtn">등록</button>
                     <button type="reset" class="btn btn-secondary col-12" id="cancelBtn">취소</button>
                 </form:form>
             </div>
@@ -142,10 +159,15 @@
   // 상품 삭제
   async function deleteItem(itemId) {
     if (!confirm('정말 삭제하시겠습니까?')) return;
+    const csrfToken = document.querySelector('input[name="_csrf"]').value;
 
     try {
+
       const response = await fetch(`/admin/item/\${itemId}/remove`, {
         method: 'DELETE',
+        headers: {
+          'X-CSRF-TOKEN': csrfToken
+        }
       });
 
       if (response.ok) {
@@ -187,6 +209,8 @@
     const itemId = document.getElementById('itemId').value;
     const itemImgId = document.getElementById('itemImgId').value;
     const formData = new FormData();
+    const csrfToken = document.querySelector('input[name="_csrf"]').value;
+    formData.append('_csrf', csrfToken);
 
     const itemType = document.getElementById('itemType').value;
     const itemName = document.getElementById('itemName').value;

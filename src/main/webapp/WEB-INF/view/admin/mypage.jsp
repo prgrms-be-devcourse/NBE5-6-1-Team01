@@ -7,12 +7,29 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <%@ include file="/WEB-INF/view/include/static.jsp" %>
+    <style>
+      .header button {
+        text-decoration: none;
+        color: black;
+        font-weight: bold;
+      }
+      .logout-link {
+        background: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+        cursor: pointer; /* 마우스 포인터를 손가락으로 */
+        font: inherit; /* 폰트 스타일 상속 */
+      }
+    </style>
 </head>
 <body class="container-fluid">
 <header>
     <div class="header">
         <a href="/admin/itemManagement">Product Management</a>
-        <a href="/user/logout">Logout</a>
+        <form:form action="/user/logout" method="POST">
+            <button type="submit" class="logout-link">Logout</button>
+        </form:form>
     </div>
 </header>
 <div class="row justify-content-center m-4">
@@ -32,17 +49,17 @@
                                 <div class="row-button">
                                     <h5>
                                             ${orderInfo.createdAt} (order-id: ${orderInfo.orderId})
-                                        <form action="/admin/addressDetail" method="post" onsubmit="return openPopupAndSubmit(this);" style="display: inline;">
+                                        <form:form action="/admin/addressDetail" method="post" onsubmit="return openPopupAndSubmit(this);" style="display: inline;">
                                             <input type="hidden" name="orderid" value="${orderInfo.orderId}">
                                             <input type="submit" value="상세" class="btn btn-outline-dark" style="display: inline; margin-left: 10px; padding:2px 4px 2px 4px;">
-                                        </form>
+                                        </form:form>
                                     </h5>
                                     <c:if test="${orderInfo.orderStatus eq 'ORDER'}">
                                         <div class="text-end">
-                                            <form action="/admin/mypage" method="post" onsubmit="return confirm('정말로 주문을 취소하시겠습니까?');">
+                                            <form:form action="/admin/mypage" method="post" onsubmit="return confirm('정말로 주문을 취소하시겠습니까?');">
                                                 <input type="hidden" name="orderid" value="${orderInfo.orderId}">
                                                 <button type="submit" class="btn btn-outline-dark">취소</button>
-                                            </form>
+                                            </form:form>
                                         </div>
                                     </c:if>
                                 </div>

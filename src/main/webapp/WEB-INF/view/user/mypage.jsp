@@ -21,9 +21,9 @@
             <h3><c:out value="${user.email}"/>님</h3>
 
             <div class="text-end mt-3 mb-3">
-                <form action="/user/update" method="get">
+                <form:form action="/user/update" method="get">
                     <button type="submit" class="btn btn-outline-dark">비밀번호 수정</button>
-                </form>
+                </form:form>
             </div>
         </div>
     </div>
@@ -58,10 +58,10 @@
                                 <h5><c:out value="${order.createdAt}"/></h5>
                                 <c:if test="${order.orderStatus eq 'ORDER'}">
                                     <div class="text-end mt-3 mb-3">
-                                        <form action="/user/mypage" method="post" onsubmit="return confirm('정말로 주문을 취소하시겠습니까?');">
+                                        <form:form action="/user/mypage" method="post" onsubmit="return confirm('정말로 주문을 취소하시겠습니까?');">
                                             <input type="hidden" name="postcode" value="${order.postcode}">
                                             <button type="submit" class="btn btn-outline-dark">취소</button>
-                                        </form>
+                                        </form:form>
                                     </div>
                                 </c:if>
                             </div>
@@ -92,10 +92,10 @@
             </c:forEach>
         </ul>
     </div>
-    <form class="right" action="/user/remove" method="post" onsubmit="return confirm('회원 탈퇴를 하시겠습니까?');">
+    <form:form class="right" action="/user/remove" method="post" onsubmit="return confirm('회원 탈퇴를 하시겠습니까?');">
         <input type="hidden" name="email" value="${user.userId}" />
         <button type="submit" class="btn btn-outline-dark">회원 탈퇴</button>
-    </form>
+    </form:form>
 </div>
 </body>
 </html>

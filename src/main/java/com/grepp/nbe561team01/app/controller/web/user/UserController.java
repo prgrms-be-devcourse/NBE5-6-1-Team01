@@ -14,6 +14,7 @@ import com.grepp.nbe561team01.infra.error.exceptions.CommonException;
 import com.grepp.nbe561team01.infra.error.exceptions.PasswordDuplicatedException;
 import com.grepp.nbe561team01.infra.error.exceptions.PasswordNotMatchedException;
 import com.grepp.nbe561team01.infra.response.ResponseCode;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -65,10 +67,14 @@ public class UserController {
     }
 
     @PostMapping("remove")
-    public String removeUser(@RequestParam("email") Integer userId) {
+    public String removeUser(@RequestParam("email") Integer userId, HttpServletRequest request) {
         userService.removeUser(userId);
-        return "redirect:/user/logout";
+        // 로그아웃 처리
+        new SecurityContextLogoutHandler().logout(request, null, null);
+        // 로그아웃 후 리다이렉트
+        return "redirect:/user/signin";
     }
+
 
     @GetMapping("mypage")
     public String mypage(Authentication authentication, Model model){
