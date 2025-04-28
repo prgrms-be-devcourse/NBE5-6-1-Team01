@@ -99,8 +99,10 @@ public class SecurityConfig {
 
         http
             .authorizeHttpRequests((requests) -> requests
-                .requestMatchers(GET, "/user/signin", "/user/signup").anonymous()
-                .requestMatchers(POST, "/user/signin", "/user/signup").anonymous()
+                .requestMatchers(GET, "/user/signin", "/user/signup").permitAll()
+                .requestMatchers(POST, "/user/signin", "/user/signup").permitAll()
+                .requestMatchers(GET, "/user/remove").hasAnyRole("ADMIN", "USER")
+                .requestMatchers(POST, "/user/remove").hasAnyRole("ADMIN", "USER")
                 .requestMatchers(GET, "/admin/signup").permitAll()
                 .requestMatchers(POST, "/admin/signup").permitAll()
                 .requestMatchers(GET, "admin/mypage", "/admin/itemManagement").hasRole("ADMIN")
