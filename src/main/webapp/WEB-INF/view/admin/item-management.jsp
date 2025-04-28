@@ -35,7 +35,7 @@
         </div>
 </header>
 <div class="row justify-content-center m-4">
-    <h1 class="text-center">Grids & Circle</h1>
+    <h1 class="text-center">상품 관리</h1>
 </div>
 
 <div class="card">
