@@ -56,8 +56,8 @@ public interface OrderRepository {
     @Select("select count(order_id) from orders where order_status = 'DELIVER'")
     int countDeliverOrderStatus();
     @Insert("""
-        INSERT INTO orders (email, address, postcode, total_price, created_at, order_status)
-        VALUES (#{email}, #{address}, #{postcode}, #{totalPrice}, NOW(), #{orderStatus})
+        INSERT INTO orders (user_id, email, address, postcode, total_price, created_at, order_status)
+        VALUES (#{userId}, #{email}, #{address}, #{postcode}, #{totalPrice}, NOW(), #{orderStatus})
     """)
     void insertOrder(OrderDto orderDto);
 

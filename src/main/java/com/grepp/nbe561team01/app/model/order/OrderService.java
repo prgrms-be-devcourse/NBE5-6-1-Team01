@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class OrderService {
 
+    private final UserRepository userRepository;
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
     private final ItemRepository itemRepository;
@@ -70,6 +71,9 @@ public class OrderService {
     @Transactional
     public void createOrder(OrderDto orderDto, String email, List<OrderItem> orderItems){
 
+        UserDto userDto = userRepository.findByEmail(email);
+
+        orderDto.setUserId(userDto.getUserId());
         orderDto.setEmail(email);
         orderDto.setOrderStatus(OrderStatus.ORDER);
         orderRepository.insertOrder(orderDto);
