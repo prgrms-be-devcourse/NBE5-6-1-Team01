@@ -21,7 +21,7 @@ class UserServiceTest {
 
     @Test
     public void removeUser(){
-        userService.removeUser("aaa@aaa.com");
+        userService.removeUser(1);
     }
 
     @Test

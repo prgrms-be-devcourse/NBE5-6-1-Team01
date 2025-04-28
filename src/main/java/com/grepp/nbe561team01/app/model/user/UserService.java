@@ -54,11 +54,8 @@ public class UserService {
 
 
     @Transactional
-    public boolean removeUser(String email) {
-        // TODO: 삭제할 회원 정보로 수정하거나 로그 출력 삭제 필요
-        log.info("삭제할 회원의 이메일: {}", email);
-
-        userRepository.removeUser(email);
+    public boolean removeUser(Integer userId) {
+        userRepository.removeUser(userId);
         return true;
     }
 

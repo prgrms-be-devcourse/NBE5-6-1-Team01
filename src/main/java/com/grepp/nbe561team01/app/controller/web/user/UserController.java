@@ -65,8 +65,8 @@ public class UserController {
     }
 
     @PostMapping("remove")
-    public String removeUser(@RequestParam("email") String email) {
-        userService.removeUser(email);
+    public String removeUser(@RequestParam("email") Integer userId) {
+        userService.removeUser(userId);
         return "redirect:/user/logout";
     }
 
