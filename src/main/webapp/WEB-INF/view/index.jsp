@@ -38,8 +38,6 @@
                             <div class="row"><c:out value="${item.itemName}"/> </div>
                         </div>
                         <div class="col text-center price"><c:out value="${item.itemPrice}"/>원</div>
-                        <div class="row small text-muted">재고: <c:out value="${item.stock}"/>개</div>
-
                         <div class="col text-end action d-flex flex-column">
                             <button type="button" class="btn btn-small btn-outline-black mb-1" onclick="addItem(this)">추가</button>
                             <button type="button" class="btn btn-small btn-outline-black" onclick="removeItem(this)">제거</button>
