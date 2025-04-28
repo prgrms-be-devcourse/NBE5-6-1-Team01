@@ -17,4 +17,8 @@
     select * from item_img where item_id = #{itemId}
   </select>
 
+  <select id="findById" resultMap="itemMap">
+    select * from items where item_id = #{itemId}
+  </select>
+
 </mapper>

@@ -51,6 +51,10 @@ public class ItemService {
         return itemRepository.selectAll();
     }
 
+    public ItemDto findById(Long itemId) {
+        return itemRepository.findById(itemId);
+    }
+
     @Transactional
     public boolean deleteItem(Long itemId) {
         return itemRepository.removeItem(itemId);

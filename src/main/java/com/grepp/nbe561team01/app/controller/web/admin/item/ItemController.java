@@ -55,6 +55,13 @@ public class ItemController {
         return ResponseEntity.ok().build();
     }
 
+    // 특정 상품 조회
+    @GetMapping("{itemId}")
+    @ResponseBody
+    public ItemDto getItem(@PathVariable Long itemId) {
+        return itemService.findById(itemId);
+    }
+
     // 상품 수정
     @PostMapping("{itemId}/update")
     public ResponseEntity<?> editItem(
