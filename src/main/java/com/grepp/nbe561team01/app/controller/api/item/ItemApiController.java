@@ -29,5 +29,4 @@ public class ItemApiController {
         ItemListPayload payload = ItemListPayload.fromDtoList(items);
         return ResponseEntity.ok(ApiResponse.success(payload));
     }
-
 }

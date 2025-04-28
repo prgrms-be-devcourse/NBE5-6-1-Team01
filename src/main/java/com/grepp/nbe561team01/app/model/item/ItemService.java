@@ -101,10 +101,4 @@ public class ItemService {
             }
         }
     }
-
-
-
-    private ItemImg findByFileName(Integer itemImgId) {
-        return itemRepository.findByItemImgId(itemImgId);
-    }
 }
