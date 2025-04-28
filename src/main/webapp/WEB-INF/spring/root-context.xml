@@ -7,6 +7,27 @@
   http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
   http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
 
+  <context:property-placeholder location="classpath:application.properties"/>
+
+  <bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
+    <property name="dataSource" ref="dataSource"/>
+
+    <property name="mapperLocations" value="classpath*:mapper/**/*.xml" />
+    <property name="typeAliasesPackage" value="com.grepp.nbe561team01.app.model" />
+
+    <property name="configuration">
+      <bean class="org.apache.ibatis.session.Configuration">
+        <property name="mapUnderscoreToCamelCase" value="true"/>
+      </bean>
+    </property>
+  </bean>
+
+
+  <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+    <constructor-arg index="0" ref="sqlSessionFactory" />
+  </bean>
+
+  <mybatis:scan base-package="com.grepp.nbe561team01.app.model" annotation="org.apache.ibatis.annotations.Mapper"/>
   <context:component-scan base-package="com.grepp.nbe561team01"/>
 
 </beans>

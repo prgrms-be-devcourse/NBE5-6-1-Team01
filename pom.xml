@@ -2,7 +2,7 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://maven.apache.org/POM/4.0.0"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <artifactId>mvc</artifactId>
+  <artifactId>project</artifactId>
 
   <build>
     <plugins>
@@ -38,6 +38,13 @@
       <artifactId>jakarta.annotation-api</artifactId>
       <groupId>jakarta.annotation</groupId>
       <version>2.1.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <version>${spring-framework.version}</version>
+      <scope>test</scope>
     </dependency>
 
     <!-- AspectJ -->
@@ -180,9 +187,35 @@
       <version>5.17.0</version>
       <scope>test</scope>
     </dependency>
-
-
+    <!--  Spring Security  -->
+    <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-web</artifactId>
+      <version>${spring-security.version}</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-config -->
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-config</artifactId>
+      <version>${spring-security.version}</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-test -->
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-test</artifactId>
+      <version>${spring-security.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-taglibs -->
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-taglibs</artifactId>
+      <version>${spring-security.version}</version>
+    </dependency>
   </dependencies>
+
+
   <groupId>com.grepp</groupId>
   <modelVersion>4.0.0</modelVersion>
   <name>spring-mvc</name>
@@ -196,6 +229,7 @@
 
     <!--  spring  -->
     <hikaricp.version>5.1.0</hikaricp.version>
+    <spring-security.version>6.4.4</spring-security.version>
     <jackson.version>2.15.3</jackson.version>
     <!--  logging  -->
     <jakarta-jstl-api.version>3.0.2</jakarta-jstl-api.version>

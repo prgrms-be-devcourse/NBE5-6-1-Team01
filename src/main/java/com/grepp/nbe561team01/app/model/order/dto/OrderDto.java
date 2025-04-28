@@ -12,10 +12,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OrderDto {
         private Integer orderId;
+        private Integer userId;
         private String email;
         private String address;
-        private Integer postcode;
-        private List<OrderItemDto> orderList;
+        private String postcode;
         private Integer totalPrice;
         private LocalDateTime createdAt;
         private OrderStatus orderStatus;

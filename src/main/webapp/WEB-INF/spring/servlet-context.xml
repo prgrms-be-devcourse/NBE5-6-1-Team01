@@ -18,7 +18,9 @@
     <property name="suffix" value=".jsp"/>
   </bean>
 
-  <mvc:annotation-driven/>
+  <bean class="org.springframework.web.multipart.support.StandardServletMultipartResolver"
+    id="multipartResolver"/>
 
+  <mvc:annotation-driven/>
   <mvc:resources location="/assets" mapping="/assets/**"/>
 </beans>
