@@ -7,6 +7,7 @@
 </head>
 <body>
 <div class="header">
+  <a href="/">Home</a>
   <%@include file="/WEB-INF/view/include/header.jsp" %>
 </div>
 <div class="row justify-content-center m-4">
