@@ -16,16 +16,18 @@
     <h1 class="text-center">MyPage</h1>
 </div>
 <div class="card mypage">
-    <div class="row-button">
-        <h3><c:out value="${user.email}"/></h3>
+    <div style="padding: 20px">
+        <div class="row-button">
+            <h3><c:out value="${user.email}"/>님</h3>
 
-        <div class="text-end mt-3 mb-3">
-            <form action="/user/update" method="get">
-                <button type="submit" class="btn btn-outline-dark">비밀번호 수정</button>
-            </form>
+            <div class="text-end mt-3 mb-3">
+                <form action="/user/update" method="get">
+                    <button type="submit" class="btn btn-outline-dark">비밀번호 수정</button>
+                </form>
+            </div>
         </div>
     </div>
-    <h5 class="flex-grow-0 left"><b>주문 목록</b></h5>
+    <h4 class="text-center"><b>주문 목록</b></h4>
     <c:if test="${empty orderList}">
         <p>주문 내역이 없습니다.</p>
     </c:if>
@@ -45,6 +47,9 @@
                     <h5 style="margin-top: 30px">배송 취소</h5>
                 </c:if>
 
+                <c:if test="${empty orderList[key]}">
+                    <p>내역이 없습니다.</p>
+                </c:if>
                 <c:forEach items="${orderList[key]}" var="order">
                     <li class="list-group-item" style="padding-left: 30px; padding-right: 30px;">
                         <!-- 주문 내역 상단 주문일자, 취소 버튼 -->
