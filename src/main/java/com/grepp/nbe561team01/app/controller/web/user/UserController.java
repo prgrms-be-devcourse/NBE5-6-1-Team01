@@ -41,12 +41,13 @@ public class UserController {
     private final OrderService orderService;
 
     @GetMapping("signup")
-    public String signup(SignupRequest form){
+    public String signup(SignupRequest form, Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // 로그인 되어 있으면
         if (authentication != null && authentication.isAuthenticated() &&
             !(authentication instanceof AnonymousAuthenticationToken)) {
-            return "redirect:/";  // 메인 페이지로 리다이렉트
+            model.addAttribute("message", "접근 권한이 없습니다.");
+            return "error/redirect";
         }
       return "user/signup";
     }
@@ -66,7 +67,7 @@ public class UserController {
     @PostMapping("remove")
     public String removeUser(@RequestParam("email") String email) {
         userService.removeUser(email);
-        return "redirect:/user/signin";
+        return "redirect:/user/logout";
     }
 
     @GetMapping("mypage")
@@ -101,12 +102,13 @@ public class UserController {
     }
 
     @GetMapping("signin")
-    public String signin(SigninRequest form){
+    public String signin(SigninRequest form, Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // 로그인 되어 있으면
         if (authentication != null && authentication.isAuthenticated() &&
             !(authentication instanceof AnonymousAuthenticationToken)) {
-            return "redirect:/";  // 메인 페이지로 리다이렉트
+                model.addAttribute("message", "접근 권한이 없습니다.");
+            return "error/redirect";
         }
         return "user/signin";
     }
