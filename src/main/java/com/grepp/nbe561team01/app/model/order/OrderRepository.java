@@ -22,7 +22,7 @@ public interface OrderRepository {
     @Select("select * from orders where email = #{email}")
     List<OrderDto> selectAllByEmail(String email);
 
-    List<OrderDto> selectOrderByOrderStatus(@Param("email") String email, @Param("orderStatus") String orderStatus);
+    List<OrderDto> selectOrderByOrderStatus(@Param("userId") Integer userId, @Param("orderStatus") String orderStatus);
 
     @Select("select * from orderitems where order_id = #{orderId}")
     List<OrderItemDto> selectItemByOrder(Integer orderId);

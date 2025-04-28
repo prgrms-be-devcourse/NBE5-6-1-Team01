@@ -2,18 +2,15 @@ package com.grepp.nbe561team01.app.model.order;
 
 import com.grepp.nbe561team01.app.model.order.dto.OrderItemDto;
 import com.grepp.nbe561team01.app.controller.web.Order.form.OrderItem;
-import com.grepp.nbe561team01.app.controller.web.Order.form.OrderRequest;
 import com.grepp.nbe561team01.app.model.item.ItemRepository;
 import com.grepp.nbe561team01.app.model.item.dto.ItemDto;
 import com.grepp.nbe561team01.app.model.order.code.OrderStatus;
-import com.grepp.nbe561team01.app.model.order.dto.OrderItemDto;
-import com.grepp.nbe561team01.app.model.order.dto.admin.OrderInfoDto;
-import com.grepp.nbe561team01.app.model.order.dto.admin.OrderInfoDto;
 import com.grepp.nbe561team01.app.model.order.dto.OrderDto;
+import com.grepp.nbe561team01.app.model.user.UserRepository;
+import com.grepp.nbe561team01.app.model.user.dto.UserDto;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
-import com.grepp.nbe561team01.app.model.order.dto.OrderDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -40,12 +37,12 @@ public class OrderService {
     }
 
     @Transactional
-    public Map<String, List<OrderDto>> findOrderAllByEmail(String email){
+    public Map<String, List<OrderDto>> findOrderAllByEmail(Integer userId){
         Map<String, List<OrderDto>> orderList = new HashMap<>();
 
-        orderList.put("ORDER", orderRepository.selectOrderByOrderStatus(email, "ORDER"));
-        orderList.put("DELIVER", orderRepository.selectOrderByOrderStatus(email, "DELIVER"));
-        orderList.put("CANCEL", orderRepository.selectOrderByOrderStatus(email, "CANCEL"));
+        orderList.put("ORDER", orderRepository.selectOrderByOrderStatus(userId, "ORDER"));
+        orderList.put("DELIVER", orderRepository.selectOrderByOrderStatus(userId, "DELIVER"));
+        orderList.put("CANCEL", orderRepository.selectOrderByOrderStatus(userId, "CANCEL"));
 
         return orderList;
     }

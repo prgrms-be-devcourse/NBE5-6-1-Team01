@@ -36,6 +36,7 @@ DROP TABLE IF EXISTS `ORDERS`;
 CREATE TABLE `ORDERS`
 (
     `ORDER_ID`     int          AUTO_INCREMENT PRIMARY KEY        COMMENT '주문번호',
+    `USER_ID`      int          NOT NULL                          COMMENT '주문자ID',
     `EMAIL`        VARCHAR(30)  NOT NULL                          COMMENT '이메일',
     `ADDRESS`      VARCHAR(50)  NOT NULL                          COMMENT '주소',
     `POSTCODE`     VARCHAR(15)  NOT NULL                   COMMENT '우편번호',

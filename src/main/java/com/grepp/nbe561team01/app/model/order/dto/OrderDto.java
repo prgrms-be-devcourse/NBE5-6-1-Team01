@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OrderDto {
         private Integer orderId;
+        private Integer userId;
         private String email;
         private String address;
         private String postcode;

@@ -22,10 +22,9 @@ public interface UserRepository {
             + "values (#{email}, #{password}, #{role}, #{createdAt})")
     void insert(UserDto dto);
 
-
-    // softDelete 적용
-    @Update("update users set deleted_at = now() where email = #{email}")
-    boolean removeUser(String email);
+    // Soft Delete 적용
+    @Update("update users set deleted_at = now() where user_id = #{userId}")
+    boolean removeUser(Integer userId);
 
     @Select("select * from users where email = #{email} and deleted_at is null")
     UserDto findByEmail(String email);

@@ -27,8 +27,8 @@
       MIN(o.created_at) AS created_at,
       #{orderStatus} AS order_status
     FROM orders o
-      JOIN users u ON o.email = u.email
-    WHERE o.email = #{email}
+      JOIN users u ON o.user_id = u.user_id
+    WHERE u.user_id = #{userId}
       AND o.order_status = #{orderStatus}
       AND u.deleted_at IS NULL
     GROUP BY o.email, o.address, o.postcode
