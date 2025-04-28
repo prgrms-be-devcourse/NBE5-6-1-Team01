@@ -26,7 +26,8 @@ public interface ItemRepository {
 
     ItemDto findById(Long itemId);
 
-    @Update("UPDATE items SET item_type = #{item.itemType}, item_name = #{item.itemName}, item_price = #{item.itemPrice} WHERE item_id = #{itemId}")
+    @Update("UPDATE items SET item_type = #{item.itemType}, item_name = #{item.itemName}, item_price = #{item.itemPrice} "
+        + "WHERE item_id = #{itemId}")
     void updateItem(@Param("itemId") Long itemId, @Param("item") ItemDto item);
 
     @Insert("insert into item_img (item_id, origin_file_name, rename_file_name, save_path)"

@@ -93,13 +93,12 @@
         </ul>
     </div>
     <form:form class="right" action="/user/remove" method="post" onsubmit="return confirm('회원 탈퇴를 하시겠습니까?');">
-        <input type="hidden" name="email" value="${user.userId}" />
+        <input type="hidden" name="userId" value="${user.userId}" />
         <button type="submit" class="btn btn-outline-dark">회원 탈퇴</button>
     </form:form>
 </div>
 </body>
 </html>
-
 <script>
 
 </script>

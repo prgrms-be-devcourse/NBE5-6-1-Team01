@@ -67,7 +67,7 @@ public class UserController {
     }
 
     @PostMapping("remove")
-    public String removeUser(@RequestParam("email") Integer userId, HttpServletRequest request) {
+    public String removeUser(@RequestParam("userId") Integer userId, HttpServletRequest request) {
         userService.removeUser(userId);
         // 로그아웃 처리
         new SecurityContextLogoutHandler().logout(request, null, null);
