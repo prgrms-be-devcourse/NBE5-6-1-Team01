@@ -56,11 +56,6 @@ public class ItemService {
         return itemRepository.removeItem(itemId);
     }
 
-
-    public ItemDto findById(Long itemId) {
-        return itemRepository.findById(itemId);
-    }
-
     public List<ItemDto> findAllItems() {
         return itemRepository.selectAll();
     }

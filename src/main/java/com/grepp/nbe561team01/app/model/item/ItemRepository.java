@@ -24,7 +24,6 @@ public interface ItemRepository {
     @Delete("delete from items where ITEM_ID = #{itemId}")
     boolean removeItem(Long itemId);
 
-
     ItemDto findById(Long itemId);
 
     @Update("UPDATE items SET item_type = #{item.itemType}, item_name = #{item.itemName}, item_price = #{item.itemPrice} WHERE item_id = #{itemId}")
